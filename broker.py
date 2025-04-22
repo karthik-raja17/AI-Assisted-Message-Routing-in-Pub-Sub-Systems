@@ -5,6 +5,54 @@ from colorama import Fore, Style
 import time
 from collections import deque
 from threading import Timer
+from rule_manager import RuleManager
+
+class AIEnergyBroker:
+    def __init__(self, groq_key: str):
+        # ... existing init code ...
+        self.rule_manager = RuleManager()
+        
+    def on_message(self, client, userdata, msg):
+        try:
+            data = json.loads(msg.payload.decode())
+            
+            # Update statistics and adapt rules
+            self.rule_manager.update_stats(data)
+            self.rule_manager.adapt_rules()
+            
+            # Get priority from both AI and rules
+            ai_priority, ai_analysis = self.ai_analyze(data)
+            rule_priority, action = self.rule_manager.evaluate_message(data)
+            
+            # Combine both determinations
+            final_priority = "critical" if "critical" in [ai_priority, rule_priority] else "normal"
+            
+            if final_priority == "critical":
+                print(f"{Fore.RED}CRITICAL! (AI:{ai_priority} Rule:{rule_priority}){Style.RESET_ALL}")
+                client.publish(
+                    "energy/critical",
+                    payload=json.dumps({
+                        **data,
+                        "ai_priority": final_priority,
+                        "ai_analysis": ai_analysis,
+                        "rule_trigger": action,
+                        "rule_threshold": self.rule_manager.rules['critical_power']['conditions'][0]['value']
+                    }),
+                    qos=1
+                )
+            else:
+                # Normal processing
+                self.normal_batch.append({
+                    **data,
+                    "ai_priority": final_priority,
+                    "ai_analysis": f"AI:{ai_priority}, Rule:{rule_priority}",
+                    "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
+                })
+                
+                # ... rest of normal batch processing ...
+                
+        except Exception as e:
+            print(f"{Fore.RED}Message processing error: {str(e)}{Style.RESET_ALL}")
 
 class AIEnergyBroker:
     def __init__(self, groq_key: str):

@@ -28,6 +28,16 @@ class RedAlertSubscriber:
     def on_message(self, client, userdata, msg):
         try:
             data = json.loads(msg.payload.decode())
+        
+            print(f"\n{Fore.RED}════════ CRITICAL ALERT ════════{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}🕒 {data.get('received_at', 'N/A')}{Style.RESET_ALL}")
+            
+            # Show what triggered the alert
+            print(f"{Fore.WHITE}Trigger: {data.get('rule_trigger', 'AI detection')}")
+            if 'rule_threshold' in data:
+                print(f"{Fore.WHITE}Threshold: {data['rule_threshold']}W{Style.RESET_ALL}")
+                
+            data = json.loads(msg.payload.decode())
             timestamp = datetime.fromisoformat(data['timestamp']).strftime("%Y-%m-%d %H:%M:%S")
             
             print(f"\n{Fore.RED}════════ CRITICAL ALERT ════════{Style.RESET_ALL}")
