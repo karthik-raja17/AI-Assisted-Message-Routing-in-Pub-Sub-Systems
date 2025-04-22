@@ -6,53 +6,7 @@ import time
 from collections import deque
 from threading import Timer
 from rule_manager import RuleManager
-
-class AIEnergyBroker:
-    def __init__(self, groq_key: str):
-        # ... existing init code ...
-        self.rule_manager = RuleManager()
-        
-    def on_message(self, client, userdata, msg):
-        try:
-            data = json.loads(msg.payload.decode())
-            
-            # Update statistics and adapt rules
-            self.rule_manager.update_stats(data)
-            self.rule_manager.adapt_rules()
-            
-            # Get priority from both AI and rules
-            ai_priority, ai_analysis = self.ai_analyze(data)
-            rule_priority, action = self.rule_manager.evaluate_message(data)
-            
-            # Combine both determinations
-            final_priority = "critical" if "critical" in [ai_priority, rule_priority] else "normal"
-            
-            if final_priority == "critical":
-                print(f"{Fore.RED}CRITICAL! (AI:{ai_priority} Rule:{rule_priority}){Style.RESET_ALL}")
-                client.publish(
-                    "energy/critical",
-                    payload=json.dumps({
-                        **data,
-                        "ai_priority": final_priority,
-                        "ai_analysis": ai_analysis,
-                        "rule_trigger": action,
-                        "rule_threshold": self.rule_manager.rules['critical_power']['conditions'][0]['value']
-                    }),
-                    qos=1
-                )
-            else:
-                # Normal processing
-                self.normal_batch.append({
-                    **data,
-                    "ai_priority": final_priority,
-                    "ai_analysis": f"AI:{ai_priority}, Rule:{rule_priority}",
-                    "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
-                })
-                
-                # ... rest of normal batch processing ...
-                
-        except Exception as e:
-            print(f"{Fore.RED}Message processing error: {str(e)}{Style.RESET_ALL}")
+import statistics
 
 class AIEnergyBroker:
     def __init__(self, groq_key: str):
@@ -63,10 +17,14 @@ class AIEnergyBroker:
         
         # Batch processing configuration
         self.normal_batch = deque()
-        self.batch_size = 5  # Number of messages to batch
-        self.batch_interval = 10  # Seconds between batch sends
+        self.batch_size = 5
+        self.batch_interval = 10
         self.batch_timer = None
         
+        # Initialize Rule Manager with lower initial thresholds
+        self.rule_manager = RuleManager()
+        
+        # MQTT Client setup
         self.client = mqtt.Client(
             mqtt.CallbackAPIVersion.VERSION2,
             "AIEnergyBroker"
@@ -88,47 +46,51 @@ class AIEnergyBroker:
         
         if not connected:
             raise RuntimeError("Failed to connect to MQTT broker after multiple attempts")
-            
+
     def on_connect(self, client, userdata, flags, rc, properties=None):
-        """Callback when the broker connects to the MQTT server"""
         if rc == 0:
             print(f"{Fore.GREEN}Broker connected to MQTT server (RC: {rc}){Style.RESET_ALL}")
             client.subscribe("building/energy", qos=1)
             print(f"{Fore.CYAN}Subscribed to 'building/energy' topic{Style.RESET_ALL}")
         else:
             print(f"{Fore.RED}Broker connection failed (RC: {rc}){Style.RESET_ALL}")
-            
+
     def ai_analyze(self, data) -> tuple:
-        """Full AI-driven analysis with dynamic routing"""
-        prompt = f"""
-        Analyze this industrial energy system data:
+        """Enhanced AI analysis with dynamic thresholds from RuleManager"""
+        current_power_threshold = self.rule_manager.rules['high_power']['conditions'][0]['value']
+        current_temp_threshold = self.rule_manager.rules['high_temp']['conditions'][0]['value']
         
-        ENERGY:
+        prompt = f"""
+        Analyze this industrial energy system data (STRICTLY FOLLOW FORMAT):
+
+        CURRENT THRESHOLDS:
+        - Power Alert: > {current_power_threshold:.1f}W or < 100W
+        - Temp Alert: > {current_temp_threshold:.1f}°C
+
+        ENERGY DATA:
         - Total: {data['energy']['total']}W
         - Lights: {data['energy']['lights']}W
-        
+
         ENVIRONMENT:
-        - Avg Temp: {sum(z['temperature'] for z in data['zones'].values())/9:.1f}°C
+        - Hottest Zone: {max(z['temperature'] for z in data['zones'].values()):.1f}°C
         - Avg Humidity: {sum(z['humidity'] for z in data['zones'].values())/9:.1f}%
-        
-        WEATHER:
-        - Outside: {data['weather']['temperature']}°C
-        - Windspeed: {data['weather']['windspeed']} m/s
-        
-        ROUTING INSTRUCTIONS:
-        1. Determine priority (critical/high/normal)
-        2. Identify any anomalies
-        3. Generate analysis summary
-        
+
+        DECISION RULES:
+        1. CRITICAL if:
+           - Power > {current_power_threshold:.1f}W OR < 100W
+           - Any zone > {current_temp_threshold:.1f}°C
+           - Abnormal patterns detected
+        2. Otherwise NORMAL
+
         RESPONSE FORMAT:
-        priority|analysis summary
+        priority|analysis_summary
         """
         
         try:
             response = self.llm_client.chat.completions.create(
                 model="llama3-70b-8192",
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.2
+                temperature=0.1  # More deterministic responses
             )
             return self._parse_ai_response(response.choices[0].message.content)
         except Exception as e:
@@ -136,24 +98,28 @@ class AIEnergyBroker:
             return ("normal", "AI analysis failed")
 
     def _parse_ai_response(self, response: str) -> tuple:
+        """Strict parsing with validation"""
         try:
             parts = response.split("|", 1)
             if len(parts) == 2:
                 priority, analysis = parts
-                return (priority.strip().lower(), analysis.strip())
+                priority = priority.strip().lower()
+                if priority not in ['normal', 'critical']:
+                    print(f"{Fore.YELLOW}Invalid priority '{priority}', defaulting to normal{Style.RESET_ALL}")
+                    priority = 'normal'
+                return (priority, analysis.strip())
             return ("normal", response.strip())
         except Exception as e:
             print(f"{Fore.YELLOW}Failed to parse AI response: {str(e)}{Style.RESET_ALL}")
             return ("normal", "AI analysis parsing failed")
 
     def process_normal_batch(self):
-        """Process and send the accumulated normal-priority messages"""
+        """Process accumulated normal messages"""
         if not self.normal_batch:
             return
             
         print(f"{Fore.CYAN}Processing batch of {len(self.normal_batch)} normal messages{Style.RESET_ALL}")
         
-        # Create aggregated batch message
         batch_data = {
             "messages": list(self.normal_batch),
             "batch_timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -162,21 +128,16 @@ class AIEnergyBroker:
             "ai_analysis": "Batch processed normal messages"
         }
         
-        # Publish the batch
         self.client.publish(
             "energy/normal/batch",
             payload=json.dumps(batch_data),
             qos=1
         )
         
-        # Clear the batch
         self.normal_batch.clear()
-        
-        # Reset the timer
         self._reset_batch_timer()
 
     def _reset_batch_timer(self):
-        """Reset or start the batch processing timer"""
         if self.batch_timer:
             self.batch_timer.cancel()
         self.batch_timer = Timer(self.batch_interval, self.process_normal_batch)
@@ -185,63 +146,72 @@ class AIEnergyBroker:
     def on_message(self, client, userdata, msg):
         try:
             data = json.loads(msg.payload.decode())
+            current_power = data['energy']['total']
             
-            # Get AI analysis
-            priority, analysis = self.ai_analyze(data)
+            # Update statistics and adapt rules
+            self.rule_manager.update_stats(data)
+            threshold_changed = self.rule_manager.adapt_rules()
             
-            # Handle critical messages immediately
-            if "critical" in priority:
-                print(f"{Fore.RED}CRITICAL condition detected!{Style.RESET_ALL}")
+            # Get evaluations
+            ai_priority, ai_analysis = self.ai_analyze(data)
+            rule_priority, action = self.rule_manager.evaluate_message(data)
+            
+            # Debug output
+            print(f"\n{Fore.MAGENTA}=== Decision Analysis ==={Style.RESET_ALL}")
+            print(f"Current Power: {current_power}W")
+            print(f"AI Decision: {ai_priority} | Rule Decision: {rule_priority}")
+            if threshold_changed:
+                print(f"{Fore.YELLOW}Thresholds were updated this cycle{Style.RESET_ALL}")
+            
+            # Final decision - critical if either system detects issues
+            final_priority = "critical" if ("critical" in [ai_priority, rule_priority]) else "normal"
+            
+            if final_priority == "critical":
+                print(f"{Fore.RED}CRITICAL ALERT! Routing to red subscriber{Style.RESET_ALL}")
                 client.publish(
                     "energy/critical",
                     payload=json.dumps({
                         **data,
-                        "ai_priority": priority,
-                        "ai_analysis": analysis
+                        "ai_priority": ai_priority,
+                        "ai_analysis": ai_analysis,
+                        "rule_priority": rule_priority,
+                        "rule_trigger": action,
+                        "current_threshold": self.rule_manager.rules['high_power']['conditions'][0]['value'],
+                        "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
                     }),
                     qos=1
                 )
             else:
-                # Add normal messages to batch
                 self.normal_batch.append({
                     **data,
-                    "ai_priority": priority,
-                    "ai_analysis": analysis,
+                    "ai_priority": final_priority,
+                    "ai_analysis": f"AI:{ai_priority}, Rule:{rule_priority}",
                     "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
                 })
                 
                 print(f"{Fore.GREEN}Added to normal batch (size: {len(self.normal_batch)}){Style.RESET_ALL}")
                 
-                # Start batch timer if not running
                 if not self.batch_timer:
                     self._reset_batch_timer()
-                
-                # Process batch if size threshold reached
                 if len(self.normal_batch) >= self.batch_size:
                     self.process_normal_batch()
             
-            print(f"{Fore.CYAN}AI Analysis:{Style.RESET_ALL}")
-            print(f"Priority: {priority}")
-            print(f"Analysis: {analysis}\n")
-            
-        except json.JSONDecodeError:
-            print(f"{Fore.RED}Error: Invalid JSON payload received{Style.RESET_ALL}")
         except Exception as e:
             print(f"{Fore.RED}Error processing message: {str(e)}{Style.RESET_ALL}")
 
     def start(self):
         try:
             print(f"{Fore.BLUE}🚀 Starting AI-Enabled MQTT Broker{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}Batch Configuration:{Style.RESET_ALL}")
-            print(f"- Size: {self.batch_size} messages")
-            print(f"- Interval: {self.batch_interval} seconds")
+            print(f"{Fore.CYAN}Initial Thresholds:{Style.RESET_ALL}")
+            print(f"- High Power: {self.rule_manager.rules['high_power']['conditions'][0]['value']}W")
+            print(f"- High Temp: {self.rule_manager.rules['high_temp']['conditions'][0]['value']}°C")
             self.client.loop_forever()
         except KeyboardInterrupt:
             print(f"{Fore.YELLOW}\n🛑 Stopping broker...{Style.RESET_ALL}")
             if self.batch_timer:
                 self.batch_timer.cancel()
             if self.normal_batch:
-                self.process_normal_batch()  # Process any remaining messages
+                self.process_normal_batch()
             self.client.disconnect()
         except Exception as e:
             print(f"{Fore.RED}⛔ Broker error: {str(e)}{Style.RESET_ALL}")

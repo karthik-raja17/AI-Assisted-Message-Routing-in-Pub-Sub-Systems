@@ -37,7 +37,6 @@ class RedAlertSubscriber:
             if 'rule_threshold' in data:
                 print(f"{Fore.WHITE}Threshold: {data['rule_threshold']}W{Style.RESET_ALL}")
                 
-            data = json.loads(msg.payload.decode())
             timestamp = datetime.fromisoformat(data['timestamp']).strftime("%Y-%m-%d %H:%M:%S")
             
             print(f"\n{Fore.RED}════════ CRITICAL ALERT ════════{Style.RESET_ALL}")
