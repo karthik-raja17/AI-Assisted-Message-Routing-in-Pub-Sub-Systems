@@ -4,6 +4,7 @@ import json
 import time
 from colorama import Fore, Style
 import traceback
+from datetime import datetime
 
 class EnergyPublisher:
     def __init__(self, data_path):
@@ -22,6 +23,10 @@ class EnergyPublisher:
             self.client.on_publish = self.on_publish
             self.client.on_log = self.on_log
             
+            # Rate limiting variables
+            self.target_interval = 2  # seconds between messages
+            self.last_publish_time = 0
+            
         except Exception as e:
             print(f"{Fore.RED}Initialization error: {str(e)}{Style.RESET_ALL}")
             traceback.print_exc()
@@ -32,6 +37,11 @@ class EnergyPublisher:
 
     def on_log(self, client, userdata, level, buf):
         print(f"{Fore.BLUE}MQTT Log: {buf}{Style.RESET_ALL}")
+
+    def _calculate_sleep_time(self):
+        """Calculate remaining time to maintain target interval"""
+        elapsed = time.time() - self.last_publish_time
+        return max(0, self.target_interval - elapsed)
 
     def publish_samples(self):
         try:
@@ -46,6 +56,11 @@ class EnergyPublisher:
             
             for index, row in self.data.iterrows():
                 try:
+                    # Maintain consistent publishing rate
+                    sleep_time = self._calculate_sleep_time()
+                    if sleep_time > 0:
+                        time.sleep(sleep_time)
+                    
                     message = {
                         "timestamp": row['date'].isoformat(),
                         "energy": {
@@ -66,6 +81,9 @@ class EnergyPublisher:
                         }
                     }
                     
+                    # Record publish time before sending
+                    self.last_publish_time = time.time()
+                    
                     info = self.client.publish(
                         "building/energy",
                         payload=json.dumps(message),
@@ -78,15 +96,15 @@ class EnergyPublisher:
                         continue
                     
                     print(f"{Fore.CYAN}[{row['date'].time()}] Sent {message['energy']['total']}W (MID: {info.mid}){Style.RESET_ALL}")
-                    time.sleep(0.5)
                     
+                except KeyboardInterrupt:
+                    print(f"{Fore.YELLOW}\nPublisher interrupted by user{Style.RESET_ALL}")
+                    break
                 except Exception as e:
                     print(f"{Fore.RED}Error processing row {index}: {str(e)}{Style.RESET_ALL}")
                     traceback.print_exc()
                     continue
                     
-        except KeyboardInterrupt:
-            print(f"{Fore.YELLOW}\nStopping publisher...{Style.RESET_ALL}")
         except Exception as e:
             print(f"{Fore.RED}Fatal error: {str(e)}{Style.RESET_ALL}")
             traceback.print_exc()

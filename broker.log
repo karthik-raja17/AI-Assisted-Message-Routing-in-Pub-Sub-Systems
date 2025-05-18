@@ -1,0 +1,265 @@
+[36m2025-05-18 18:54:50,343[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 18:54:50,387[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 23755)
+[36m2025-05-18 18:54:50,389[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 23756)
+[36m2025-05-18 18:54:50,392[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 23757)
+[36m2025-05-18 18:54:50,396[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 23758)
+[36m2025-05-18 18:54:50,405[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 18:54:50,409[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 18:59:28,643[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 18:59:28,687[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 23862)
+[36m2025-05-18 18:59:28,693[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 23863)
+[36m2025-05-18 18:59:28,695[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 23864)
+[36m2025-05-18 18:59:28,696[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 23865)
+[36m2025-05-18 18:59:28,704[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 18:59:28,704[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 18:59:28,704[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 18:59:28,704[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 18:59:28,705[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 18:59:28,706[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 18:59:28,706[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 18:59:35,036[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 18:59:35,039[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 18:59:45,006[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 18:59:45,007[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 18:59:55,026[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 18:59:55,027[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 18:59:58,705[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 50.0%
+[36m2025-05-18 18:59:58,724[0m - [32mINFO[0m - 🔽 Scaled DOWN normal subscribers: Removed normal/subscriber1
+[36m2025-05-18 18:59:58,725[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:00:04,791[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:00:04,792[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:00:14,992[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:00:14,993[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:00:24,954[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:00:24,955[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:00:28,726[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 50.0%
+[36m2025-05-18 19:00:28,731[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:00:34,988[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:00:34,991[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:02:16,595[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 19:02:16,635[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 23998)
+[36m2025-05-18 19:02:16,636[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 23999)
+[36m2025-05-18 19:02:16,644[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 24000)
+[36m2025-05-18 19:02:16,646[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 24001)
+[36m2025-05-18 19:02:16,656[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 19:02:16,658[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 19:02:21,650[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:21,654[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:02:24,526[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:24,527[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:02:27,441[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:27,442[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:02:30,437[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:30,439[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:02:33,447[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:33,448[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:02:36,391[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:36,394[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:02:39,463[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:39,465[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:02:42,452[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:02:42,453[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:04,621[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 19:03:04,655[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 24101)
+[36m2025-05-18 19:03:04,658[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 24102)
+[36m2025-05-18 19:03:04,658[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 24103)
+[36m2025-05-18 19:03:04,661[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 24104)
+[36m2025-05-18 19:03:04,662[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 19:03:04,664[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:03:04,664[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 19:03:04,665[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 19:03:04,665[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 19:03:04,665[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 19:03:04,665[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 19:03:09,479[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:09,482[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:10,431[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:10,434[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:11,402[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:11,405[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:12,323[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:12,325[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:13,333[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:13,339[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:14,285[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:14,287[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:15,368[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:15,370[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:16,386[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:16,389[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:17,452[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:17,453[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:18,348[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:18,350[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:19,283[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:19,285[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-18 19:03:20,287[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:20,288[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:21,388[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:21,389[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:22,376[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:22,377[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-18 19:03:23,300[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:23,302[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-18 19:03:24,290[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:24,291[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-18 19:03:25,367[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:25,369[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:26,410[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:26,411[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:27,291[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:27,292[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:28,381[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:28,382[0m - [32mINFO[0m - Added to normal batch (size: 5)
+[36m2025-05-18 19:03:28,382[0m - [32mINFO[0m - Processing batch of 5 normal messages
+[36m2025-05-18 19:03:29,296[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:29,297[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-18 19:03:30,299[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:30,300[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-18 19:03:46,963[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 19:03:47,001[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 24240)
+[36m2025-05-18 19:03:47,007[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 24241)
+[36m2025-05-18 19:03:47,009[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 24242)
+[36m2025-05-18 19:03:47,020[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 24243)
+[36m2025-05-18 19:03:47,032[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 19:03:47,053[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:03:47,055[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 19:03:47,057[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 19:03:47,057[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 19:03:47,057[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 19:03:47,057[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 19:03:51,829[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:51,832[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:53,811[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:53,812[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:55,773[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:55,777[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:03:57,680[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:57,681[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:03:59,714[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:03:59,715[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:04:01,706[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:01,708[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:04:03,635[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:03,637[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:05,741[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:05,741[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:07,732[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:07,732[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:09,711[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:09,714[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:04:11,630[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:11,633[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-18 19:04:13,860[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:13,862[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:15,713[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:15,715[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:17,046[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 50.0%
+[36m2025-05-18 19:04:17,082[0m - [32mINFO[0m - 🔽 Scaled DOWN normal subscribers: Removed normal/subscriber1
+[36m2025-05-18 19:04:17,082[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 19:04:17,707[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:17,709[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-18 19:04:19,779[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:19,779[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-18 19:04:21,626[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:21,627[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-18 19:04:21,635[0m - [32mINFO[0m - Processing batch of 4 normal messages
+[36m2025-05-18 19:04:23,743[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:23,744[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:04:25,817[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:25,817[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 19:04:27,672[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:27,674[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 19:04:29,733[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:29,734[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-18 19:04:31,637[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-18 19:04:31,738[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:31,740[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-18 19:04:33,643[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:33,644[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-18 19:04:35,754[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:35,756[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-18 19:04:37,687[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 19:04:37,688[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-18 20:57:05,479[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 20:57:05,550[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 25218)
+[36m2025-05-18 20:57:05,554[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 25219)
+[36m2025-05-18 20:57:05,556[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 25220)
+[36m2025-05-18 20:57:05,560[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 25221)
+[36m2025-05-18 20:57:05,577[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 20:57:05,583[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 20:57:05,583[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 20:57:05,584[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 20:57:05,584[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 20:57:05,584[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 20:57:05,584[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 20:57:12,665[0m - [32mCRITICAL[0m - [31m⛔ Broker crashed: cannot access local variable 'ai_priority' where it is not associated with a value[0m
+[36m2025-05-18 20:57:12,666[0m - [32mINFO[0m - Cleaning up resources...
+[36m2025-05-18 20:57:12,702[0m - [32mINFO[0m - Terminated normal/subscriber1
+[36m2025-05-18 20:57:12,737[0m - [32mINFO[0m - Terminated normal/subscriber2
+[36m2025-05-18 20:57:12,774[0m - [32mINFO[0m - Terminated critical/subscriber1
+[36m2025-05-18 20:57:12,809[0m - [32mINFO[0m - Terminated critical/subscriber2
+[36m2025-05-18 20:57:12,810[0m - [32mINFO[0m - [32mCleanup complete[0m
+[36m2025-05-18 20:57:12,810[0m - [32mCRITICAL[0m - [31mFailed to start broker: cannot access local variable 'ai_priority' where it is not associated with a value[0m
+[36m2025-05-18 21:01:33,367[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-18 21:01:33,403[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 25355)
+[36m2025-05-18 21:01:33,406[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 25356)
+[36m2025-05-18 21:01:33,408[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 25357)
+[36m2025-05-18 21:01:33,409[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 25358)
+[36m2025-05-18 21:01:33,414[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-18 21:01:33,416[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 21:01:33,417[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-18 21:01:33,417[0m - [32mINFO[0m - Initial Thresholds: High Power: 300W, High Temp: 28°C
+[36m2025-05-18 21:01:33,417[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-18 21:01:33,417[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: Success)[0m
+[36m2025-05-18 21:01:33,424[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-18 21:01:41,899[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:41,905[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 60w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the temperature alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:41,905[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 21:01:43,551[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:43,552[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. total power consumption is 60w, with 30w allocated to lights. environmental conditions are also within acceptable ranges, with the hottest zone at 19.9°c and average humidity at 50.8%. no critical conditions detected.
+[36m2025-05-18 21:01:43,553[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 21:01:45,581[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:45,583[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters: power consumption is 50w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the temperature alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:45,584[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 21:01:47,457[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:47,458[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 50w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:47,458[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 21:01:49,505[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:49,508[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 60w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:49,508[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 21:01:51,578[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:51,578[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 50w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the temperature alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:51,579[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 21:01:53,553[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:53,555[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 60w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:53,557[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-18 21:01:55,500[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:55,502[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 60w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:55,502[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 21:01:57,531[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:57,532[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 60w, which is below the alert threshold of 300w. the hottest zone is 19.8°c, which is below the temperature alert threshold of 28.0°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:57,534[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 21:01:59,490[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-18 21:01:59,492[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 70w, which is below the alert threshold of 300w. the hottest zone is 19.9°c, which is below the alert threshold of 20.2°c. no abnormal patterns detected.
+[36m2025-05-18 21:01:59,492[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-18 21:02:03,417[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 50.0%
+[36m2025-05-18 21:02:03,433[0m - [32mINFO[0m - 🔽 Scaled DOWN normal subscribers: Removed normal/subscriber1
+[36m2025-05-18 21:02:03,435[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 21:02:33,435[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 0.0%
+[36m2025-05-18 21:02:33,467[0m - [32mINFO[0m - 🔽 Scaled DOWN critical subscribers: Removed critical/subscriber1
+[36m2025-05-18 21:02:33,471[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 21:03:03,471[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 0.0%
+[36m2025-05-18 21:03:03,472[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
+[36m2025-05-18 21:03:33,472[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 0.0%
+[36m2025-05-18 21:03:33,474[0m - [32mINFO[0m - Started auto-scaling engine (checks every 30s)
