@@ -55,7 +55,9 @@ class AIEnergyBroker:
         self.max_critical_subscribers = 3
         self.min_normal_subscribers = 1
         self.min_critical_subscribers = 1
-        self.scaling_interval = 30  # seconds
+        self.scaling_interval = 60  # Check less frequently
+        self.scaling_threshold_up = 0.85  # More conservative scale-up threshold
+        self.scaling_threshold_down = 0.15  # More conservative scale-down threshold
         self.scaling_timer = None
         
         # Current active subscribers
@@ -63,11 +65,8 @@ class AIEnergyBroker:
         self.active_critical_subs = {}
         self._initialize_subscribers()
         
-        # MQTT Client setup
-        self.client = mqtt.Client(
-            mqtt.CallbackAPIVersion.VERSION2,
-            "AIEnergyBroker"
-        )
+        # MQTT Client setup - Updated for older paho-mqtt version
+        self.client = mqtt.Client("AIEnergyBroker")
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.on_publish = self._on_publish
@@ -155,6 +154,8 @@ class AIEnergyBroker:
             # Check scaling needs
             self._check_normal_scaling(avg_normal_load)
             self._check_critical_scaling(avg_critical_load)
+            self.logger.debug(f"Active Normal Subscribers: {list(self.active_normal_subs.keys())}")
+            self.logger.debug(f"Active Critical Subscribers: {list(self.active_critical_subs.keys())}")
                 
         except Exception as e:
             self.logger.error(f"{Fore.RED}Scaling check failed: {str(e)}{Style.RESET_ALL}")
@@ -169,16 +170,16 @@ class AIEnergyBroker:
 
     def _check_normal_scaling(self, avg_load: float):
         """Check if normal subscribers need scaling"""
-        if (avg_load > 0.75 and len(self.active_normal_subs) < self.max_normal_subscribers):
+        if (avg_load > self.scaling_threshold_up and len(self.active_normal_subs) < self.max_normal_subscribers):
             self._scale_up("normal", self.active_normal_subs, self.max_normal_subscribers)
-        elif (avg_load < 0.25 and len(self.active_normal_subs) > self.min_normal_subscribers):
+        elif (avg_load < self.scaling_threshold_down and len(self.active_normal_subs) > self.min_normal_subscribers):
             self._scale_down("normal", self.active_normal_subs, self.min_normal_subscribers)
 
     def _check_critical_scaling(self, avg_load: float):
         """Check if critical subscribers need scaling"""
-        if (avg_load > 0.75 and len(self.active_critical_subs) < self.max_critical_subscribers):
+        if (avg_load > self.scaling_threshold_up and len(self.active_critical_subs) < self.max_critical_subscribers):
             self._scale_up("critical", self.active_critical_subs, self.max_critical_subscribers)
-        elif (avg_load < 0.25 and len(self.active_critical_subs) > self.min_critical_subscribers):
+        elif (avg_load < self.scaling_threshold_down and len(self.active_critical_subs) > self.min_critical_subscribers):
             self._scale_down("critical", self.active_critical_subs, self.min_critical_subscribers)
 
     def _scale_up(self, sub_type: str, pool: dict, max_subs: int):
@@ -236,8 +237,8 @@ class AIEnergyBroker:
             except Exception as e:
                 self.logger.error(f"{Fore.RED}Failed to scale down {sub_type} subscribers: {str(e)}{Style.RESET_ALL}")
 
-    def _on_connect(self, client, userdata, flags, rc, properties=None):
-        """Handle MQTT connection events"""
+    def _on_connect(self, client, userdata, flags, rc):
+        """Handle MQTT connection events (updated for older paho-mqtt)"""
         if rc == 0:
             self.logger.info(f"{Fore.GREEN}Connected to MQTT server (RC: {rc}){Style.RESET_ALL}")
             client.subscribe("building/energy", qos=1)
@@ -269,6 +270,13 @@ class AIEnergyBroker:
             # Determine final priority
             final_priority = "critical" if ("critical" in [ai_priority, rule_priority]) else "normal"
             
+            if rule_priority == "critical":
+                final_priority = "critical"  # Hard rule violation always critical
+            elif ai_priority == "critical" and rule_priority == "normal":
+                # AI-detected anomaly without rule violation
+                final_priority = "normal"  # Downgrade to normal but include AI warning
+                data["ai_warning"] = ai_analysis  # Preserve AI insight for monitoring
+            
             if final_priority == "critical":
                 self._handle_critical_message(client, data, ai_priority, ai_analysis, rule_priority, action)
             else:
@@ -277,9 +285,9 @@ class AIEnergyBroker:
         except Exception as e:
             self.logger.error(f"{Fore.RED}Error processing message: {str(e)}{Style.RESET_ALL}")
 
-    def _on_publish(self, client, userdata, mid, reason_code, properties):
-        """Handle publish confirmation"""
-        self.logger.debug(f"Message published (MID: {mid}, Reason: {reason_code})")
+    def _on_publish(self, client, userdata, mid):
+        """Handle publish confirmation (updated for older paho-mqtt)"""
+        self.logger.debug(f"Message published (MID: {mid})")
 
     def _handle_critical_message(self, client, data, ai_priority, ai_analysis, rule_priority, action):
         """Process critical priority messages"""
@@ -348,27 +356,35 @@ class AIEnergyBroker:
         current_power_threshold = self.rule_manager.rules['high_power']['conditions'][0]['value']
         current_temp_threshold = self.rule_manager.rules['high_temp']['conditions'][0]['value']
         
+        # Prepare data for AI analysis
+        energy_data = {
+            "total_power": data['energy']['total'],
+            "lights_power": data['energy']['lights'],
+            "equipment_power": data['energy'].get('equipment', 0),
+            "hvac_power": data['energy'].get('hvac', 0),
+            "zones": {zone: values['temperature'] for zone, values in data['zones'].items()},
+            "current_thresholds": {
+                "power": current_power_threshold,
+                "temperature": current_temp_threshold
+            }
+        }
+        
         prompt = f"""
         Analyze this industrial energy system data (STRICTLY FOLLOW FORMAT):
+
+        CURRENT DATA:
+        {json.dumps(energy_data, indent=2)}
 
         CURRENT THRESHOLDS:
         - Power Alert: > {current_power_threshold:.1f}W or < 100W
         - Temp Alert: > {current_temp_threshold:.1f}°C
 
-        ENERGY DATA:
-        - Total: {data['energy']['total']}W
-        - Lights: {data['energy']['lights']}W
-
-        ENVIRONMENT:
-        - Hottest Zone: {max(z['temperature'] for z in data['zones'].values()):.1f}°C
-        - Avg Humidity: {sum(z['humidity'] for z in data['zones'].values())/9:.1f}%
-
-        DECISION RULES:
-        1. CRITICAL if:
-           - Power > {current_power_threshold:.1f}W OR < 100W
-           - Any zone > {current_temp_threshold:.1f}°C
-           - Abnormal patterns detected
-        2. Otherwise NORMAL
+        STRICT CRITICAL CONDITIONS:
+        1. MUST report critical ONLY if:
+           - Power > {current_power_threshold*1.1:.1f}W (10% buffer) OR < 50W
+           - Any zone > {current_temp_threshold*1.1:.1f}°C (10% buffer)
+           - Clear equipment failure patterns
+        2. Otherwise report normal
 
         RESPONSE FORMAT:
         priority|analysis_summary
@@ -385,7 +401,7 @@ class AIEnergyBroker:
             return self._parse_ai_response(response.choices[0].message.content)
         except Exception as e:
             self.logger.error(f"{Fore.RED}AI analysis failed: {str(e)}{Style.RESET_ALL}")
-            raise  # Let the caller handle the exception
+            raise
 
     def _parse_ai_response(self, response: str) -> tuple:
         """Parse the AI response into priority and analysis"""
@@ -422,7 +438,6 @@ class AIEnergyBroker:
             return
             
         self.logger.info(f"Processing batch of {len(self.normal_batch)} normal messages")
-        self.logger.debug(f"Batch contents: {json.dumps(batch_data, indent=2)}")
         
         selected_sub = self.select_subscriber(self.active_normal_subs)
         subscriber_num = selected_sub.split('subscriber')[-1]

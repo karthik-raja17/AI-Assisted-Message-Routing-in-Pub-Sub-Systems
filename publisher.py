@@ -12,11 +12,8 @@ class EnergyPublisher:
             self.data = pd.read_csv(data_path, parse_dates=['date'])
             print(f"{Fore.GREEN}Successfully loaded {len(self.data)} records{Style.RESET_ALL}")
             
-            self.client = mqtt.Client(
-                mqtt.CallbackAPIVersion.VERSION2,
-                "EnergyPublisher",
-                clean_session=False
-            )
+            # Updated for older paho-mqtt version
+            self.client = mqtt.Client("EnergyPublisher")
             self.client.max_queued_messages = 0
             
             # Add callbacks for debugging
@@ -32,8 +29,9 @@ class EnergyPublisher:
             traceback.print_exc()
             raise
 
-    def on_publish(self, client, userdata, mid, reason_code, properties):
-        print(f"{Fore.YELLOW}Message published (MID: {mid}, RC: {reason_code}){Style.RESET_ALL}")
+    def on_publish(self, client, userdata, mid):
+        """Updated for older paho-mqtt version"""
+        print(f"{Fore.YELLOW}Message published (MID: {mid}){Style.RESET_ALL}")
 
     def on_log(self, client, userdata, level, buf):
         print(f"{Fore.BLUE}MQTT Log: {buf}{Style.RESET_ALL}")
@@ -65,7 +63,9 @@ class EnergyPublisher:
                         "timestamp": row['date'].isoformat(),
                         "energy": {
                             "total": int(row['Appliances']),
-                            "lights": int(row['lights'])
+                            "lights": int(row['lights']),
+                            "hvac": int(row['Appliances'] * 0.4),  # Add estimated HVAC
+                            "equipment": int(row['Appliances'] * 0.6)  # Add estimated equipment
                         },
                         "zones": {
                             f"zone_{i}": {
@@ -91,9 +91,8 @@ class EnergyPublisher:
                     )
                     
                     # Wait for publish to complete with timeout
-                    if not info.wait_for_publish(timeout=5):
-                        print(f"{Fore.RED}Timeout waiting for message {index} to publish{Style.RESET_ALL}")
-                        continue
+                    if not info.is_published():
+                        time.sleep(0.1)  # Simple wait instead of wait_for_publish
                     
                     print(f"{Fore.CYAN}[{row['date'].time()}] Sent {message['energy']['total']}W (MID: {info.mid}){Style.RESET_ALL}")
                     
