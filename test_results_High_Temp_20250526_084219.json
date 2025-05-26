@@ -1,0 +1,17 @@
+{
+  "test_name": "High_Temp",
+  "start_time": "2025-05-26 08:41:48",
+  "messages_sent": 30,
+  "messages_routed": {
+    "normal": 3,
+    "critical": 3
+  },
+  "latencies": [
+    0.8441989421844482,
+    7.795820236206055,
+    8.781485319137573
+  ],
+  "end_time": "2025-05-26 08:42:19",
+  "duration_seconds": 30,
+  "avg_latency": 5.807168165842692
+}

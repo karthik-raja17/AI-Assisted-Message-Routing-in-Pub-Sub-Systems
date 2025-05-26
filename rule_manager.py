@@ -11,7 +11,7 @@ class RuleManager:
             "high_power": {
                 "priority": "critical",
                 "conditions": [
-                    {"field": "energy.total", "op": ">", "value": 300}  # Lower initial threshold
+                    {"field": "energy.total", "op": ">", "value": 450}  # Lower initial threshold
                 ],
                 "action": "route_to_red"
             },
@@ -25,7 +25,7 @@ class RuleManager:
             "high_temp": {
                 "priority": "critical",
                 "conditions": [
-                    {"field": "zones.*.temperature", "op": ">", "value": 28}  # Lower initial temp threshold
+                    {"field": "zones.*.temperature", "op": ">", "value": 32}  # Lower initial temp threshold
                 ],
                 "action": "route_to_red"
             }
@@ -50,7 +50,7 @@ class RuleManager:
         changes = False
         
         # Only adapt if we have sufficient data
-        if len(self.message_stats['energy_total']) >= 10:
+        if len(self.message_stats['energy_total']) % 100 != 0:
             # Calculate new power threshold (less sensitive adjustment)
             energy_data = self.message_stats['energy_total']
             avg = statistics.mean(energy_data)
@@ -82,6 +82,8 @@ class RuleManager:
         return changes
 
     def evaluate_message(self, message):
+        if not isinstance(message, dict):
+            raise ValueError("Message must be a dictionary")
         """Evaluate message against all rules with detailed logging"""
         try:
             print(f"\n{Fore.CYAN}=== Rule Evaluation ==={Style.RESET_ALL}")

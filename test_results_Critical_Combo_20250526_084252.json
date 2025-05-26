@@ -1,0 +1,17 @@
+{
+  "test_name": "Critical_Combo",
+  "start_time": "2025-05-26 08:42:21",
+  "messages_sent": 30,
+  "messages_routed": {
+    "normal": 2,
+    "critical": 3
+  },
+  "latencies": [
+    7.7360522747039795,
+    7.58997654914856,
+    3.5900702476501465
+  ],
+  "end_time": "2025-05-26 08:42:52",
+  "duration_seconds": 30,
+  "avg_latency": 6.3053663571675616
+}

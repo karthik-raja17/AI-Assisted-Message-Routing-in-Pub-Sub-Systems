@@ -1,0 +1,82 @@
+{
+  "test_start": "2025-05-26 08:42:54",
+  "test_cases": [
+    {
+      "test_name": "Normal_Load",
+      "start_time": "2025-05-26 08:40:43",
+      "messages_sent": 30,
+      "messages_routed": {
+        "normal": 2,
+        "critical": 10
+      },
+      "latencies": [
+        0.6337711811065674,
+        0.9506642818450928,
+        0.09955215454101562,
+        0.14904475212097168,
+        0.6584351062774658,
+        0.9912509918212891,
+        0.6057100296020508,
+        0.038022756576538086,
+        0.10994529724121094,
+        0.9692075252532959
+      ],
+      "end_time": "2025-05-26 08:41:13",
+      "duration_seconds": 30,
+      "avg_latency": 0.5205604076385498
+    },
+    {
+      "test_name": "High_Power",
+      "start_time": "2025-05-26 08:41:15",
+      "messages_sent": 30,
+      "messages_routed": {
+        "normal": 4,
+        "critical": 5
+      },
+      "latencies": [
+        0.8037309646606445,
+        4.218827724456787,
+        7.888803482055664,
+        4.888879776000977,
+        0.8890092372894287
+      ],
+      "end_time": "2025-05-26 08:41:46",
+      "duration_seconds": 30,
+      "avg_latency": 3.7378502368927
+    },
+    {
+      "test_name": "High_Temp",
+      "start_time": "2025-05-26 08:41:48",
+      "messages_sent": 30,
+      "messages_routed": {
+        "normal": 3,
+        "critical": 3
+      },
+      "latencies": [
+        0.8441989421844482,
+        7.795820236206055,
+        8.781485319137573
+      ],
+      "end_time": "2025-05-26 08:42:19",
+      "duration_seconds": 30,
+      "avg_latency": 5.807168165842692
+    },
+    {
+      "test_name": "Critical_Combo",
+      "start_time": "2025-05-26 08:42:21",
+      "messages_sent": 30,
+      "messages_routed": {
+        "normal": 2,
+        "critical": 3
+      },
+      "latencies": [
+        7.7360522747039795,
+        7.58997654914856,
+        3.5900702476501465
+      ],
+      "end_time": "2025-05-26 08:42:52",
+      "duration_seconds": 30,
+      "avg_latency": 6.3053663571675616
+    }
+  ]
+}

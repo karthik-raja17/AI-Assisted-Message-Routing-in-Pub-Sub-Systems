@@ -15,6 +15,8 @@ import random
 import subprocess
 import sys
 import logging
+import traceback
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -247,44 +249,45 @@ class AIEnergyBroker:
             self.logger.error(f"{Fore.RED}Connection failed (RC: {rc}){Style.RESET_ALL}")
 
     def _on_message(self, client, userdata, msg):
-        """Process incoming MQTT messages"""
+        """Safe message handling with full error protection"""
         try:
-            data = json.loads(msg.payload.decode())
-            self.logger.debug(f"Received message on {msg.topic}")
-            
-            # Update rules and get priorities
-            self.rule_manager.update_stats(data)
-            threshold_changed = self.rule_manager.adapt_rules()
-            
-            # Get AI analysis with fallback
-            try:
-                ai_priority, ai_analysis = self.ai_analyze(data)
-                self.logger.info(f"AI Analysis - Priority: {ai_priority}, Analysis: {ai_analysis}")
-            except Exception as e:
-                self.logger.warning(f"{Fore.YELLOW}AI analysis failed, using fallback: {str(e)}{Style.RESET_ALL}")
-                ai_priority = "normal"
-                ai_analysis = "AI analysis unavailable"
-            
-            rule_priority, action = self.rule_manager.evaluate_message(data)
-            
-            # Determine final priority
-            final_priority = "critical" if ("critical" in [ai_priority, rule_priority]) else "normal"
-            
-            if rule_priority == "critical":
-                final_priority = "critical"  # Hard rule violation always critical
-            elif ai_priority == "critical" and rule_priority == "normal":
-                # AI-detected anomaly without rule violation
-                final_priority = "normal"  # Downgrade to normal but include AI warning
-                data["ai_warning"] = ai_analysis  # Preserve AI insight for monitoring
-            
-            if final_priority == "critical":
-                self._handle_critical_message(client, data, ai_priority, ai_analysis, rule_priority, action)
-            else:
-                self._handle_normal_message(data, ai_priority, rule_priority)
-            
-        except Exception as e:
-            self.logger.error(f"{Fore.RED}Error processing message: {str(e)}{Style.RESET_ALL}")
+            # 1. Validate raw message exists
+            if not msg.payload:
+                self.logger.error("Received empty message payload")
+                return
 
+            # 2. Safely parse JSON with validation
+            try:
+                data = json.loads(msg.payload.decode('utf-8'))
+            except json.JSONDecodeError as e:
+                self.logger.error(f"Invalid JSON: {str(e)}")
+                return
+            except UnicodeDecodeError as e:
+                self.logger.error(f"Encoding error: {str(e)}")
+                return
+
+            # 3. Validate message structure
+            required_fields = ['energy', 'zones']
+            if not all(field in data for field in required_fields):
+                self.logger.error(f"Missing required fields in: {data}")
+                return
+
+            # 4. Process with isolated error handling
+            try:
+                self._process_message(data)
+            except Exception as e:
+                self.logger.error(f"Processing failed: {str(e)}")
+                # Emergency fallback routing
+                emergency_msg = {
+                    'error': str(e),
+                    'original_topic': msg.topic,
+                    'timestamp': datetime.now().isoformat()
+                }
+                self._handle_critical_message(emergency_msg)
+
+        except Exception as catastrophic_error:
+            self.logger.critical(f"Catastrophic failure: {str(catastrophic_error)}")
+            traceback.print_exc()
     def _on_publish(self, client, userdata, mid):
         """Handle publish confirmation (updated for older paho-mqtt)"""
         self.logger.debug(f"Message published (MID: {mid})")
@@ -396,12 +399,11 @@ class AIEnergyBroker:
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.1,
                 max_tokens=100,
-                timeout=10  # Add timeout to prevent hanging
+                timeout=5  # Add timeout to prevent hanging
             )
             return self._parse_ai_response(response.choices[0].message.content)
         except Exception as e:
-            self.logger.error(f"{Fore.RED}AI analysis failed: {str(e)}{Style.RESET_ALL}")
-            raise
+            return "normal", "AI timeout"
 
     def _parse_ai_response(self, response: str) -> tuple:
         """Parse the AI response into priority and analysis"""
@@ -492,7 +494,46 @@ class AIEnergyBroker:
         self.logger.info(f"Auto-Scaling Configuration: "
                         f"Normal: {len(self.active_normal_subs)}/{self.max_normal_subscribers}, "
                         f"Critical: {len(self.active_critical_subs)}/{self.max_critical_subscribers}")
-
+    
+    def _process_message(self, data):
+        """Central message processing handler"""
+        try:
+            # Ensure consistent message format
+            if 'timestamp' not in data:
+                data['timestamp'] = datetime.now().isoformat()
+            
+            # Process rules and AI analysis
+            self.rule_manager.update_stats(data)
+            self.rule_manager.adapt_rules()
+            
+            # Get AI analysis with fallback
+            try:
+                ai_priority, ai_analysis = self.ai_analyze(data)
+                self.logger.info(f"AI Analysis - Priority: {ai_priority}, Analysis: {ai_analysis}")
+            except Exception as e:
+                self.logger.warning(f"AI analysis failed, using fallback: {str(e)}")
+                ai_priority = "normal"
+                ai_analysis = "AI analysis unavailable"
+            
+            rule_priority, action = self.rule_manager.evaluate_message(data)
+            
+            # Route message based on priority
+            if rule_priority == "critical" or ai_priority == "critical":
+                self._handle_critical_message(
+                    client=self.client,
+                    data=data,
+                    ai_priority=ai_priority,
+                    ai_analysis=ai_analysis,
+                    rule_priority=rule_priority,
+                    action=action
+                )
+            else:
+                self._handle_normal_message(data, ai_priority, rule_priority)
+                
+        except Exception as e:
+            self.logger.error(f"Processing failed: {str(e)}")
+            traceback.print_exc()
+    
     def _cleanup(self):
         """Cleanup resources before shutdown"""
         self.logger.info("Cleaning up resources...")

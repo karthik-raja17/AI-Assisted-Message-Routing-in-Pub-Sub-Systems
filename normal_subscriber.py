@@ -68,6 +68,11 @@ class NormalSubscriber:
 
     def on_message(self, client, userdata, msg):
         try:
+            
+            qsize = client._msg_queue.qsize()
+            if qsize > 5:
+                print(f"!QUEUE OVERLOAD: {qsize} pending!")
+            
             data = json.loads(msg.payload.decode())
             topic_parts = msg.topic.split('/')
             alert_level = topic_parts[1] if len(topic_parts) > 1 else "normal"
@@ -102,8 +107,7 @@ class NormalSubscriber:
                 print(f"{Fore.CYAN}══════════════════════════════{Style.RESET_ALL}\n")
             
         except Exception as e:
-            print(f"{Fore.RED}ERROR: {str(e)}{Style.RESET_ALL}")
-            traceback.print_exc()
+            print(f"SUBSCRIBER CRASH: {str(e)}")
 
     def start(self):
         print(f"{Fore.CYAN}🔌 Starting NORMAL Subscriber {self.subscriber_id}{Style.RESET_ALL}")

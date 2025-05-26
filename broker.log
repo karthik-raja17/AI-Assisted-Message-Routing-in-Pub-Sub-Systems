@@ -1,0 +1,1340 @@
+[36m2025-05-26 07:45:44,351[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-26 07:45:44,428[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 12769)
+[36m2025-05-26 07:45:44,431[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 12770)
+[36m2025-05-26 07:45:44,434[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 12771)
+[36m2025-05-26 07:45:44,442[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 12772)
+[36m2025-05-26 07:45:44,449[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-26 07:45:44,451[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 07:45:44,451[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-26 07:45:44,451[0m - [32mINFO[0m - Initial Thresholds: High Power: 450W, High Temp: 32°C
+[36m2025-05-26 07:45:44,451[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-26 07:45:44,452[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: 0)[0m
+[36m2025-05-26 07:45:44,453[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-26 07:45:49,093[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:49,097[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* breakdown of power consumption by category:
+	+ lights: 30w
+	+ equipment: 36w
+	+ hvac: 24w
+* zone-wise power consumption:
+	+ zone 1: 19.89w
+	+ zone 2: 19.2w
+	+ zone 3: 19.79
+[36m2025-05-26 07:45:49,097[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:45:51,602[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:51,605[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 60w, which is below the power alert threshold of 32°c. none of the zones exceed the critical temperature threshold of 35.2°c. additionally, there are no equipment failure patterns detected.
+[36m2025-05-26 07:45:51,607[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:45:52,104[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:52,110[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+**priority:** normal
+
+**analysis summary:**
+
+* total power consumption is 180 w, which is below the power alert threshold of 300w.
+* zone temperatures are 21.22511606706665°c and 19.710841267092423°c, both below the temperature alert threshold of 32°c.
+* no clear equipment failure patterns are reported.
+* therefore, the system is operating within safe limits,
+[36m2025-05-26 07:45:52,113[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:45:52,696[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:52,698[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 290w (within normal range)
+* zone temperatures: 
+	+ zone 1: 20.71°c (within normal range)
+	+ zone 2: 18.72°c (within normal range)
+* equipment power consumption: 116w (within normal range)
+* hvac power consumption: 116w (within normal range)
+
+**critical conditions check**
+
+* power consumption:
+[36m2025-05-26 07:45:52,698[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:45:53,692[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:53,697[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 167w (below power alert threshold)
+* lights power: 33w
+* equipment power: 66w
+* hvac power: 66w
+* zone 1 temperature: 21.27°c (below temperature alert threshold)
+* zone 2 temperature: 19.61°c (below temperature alert threshold)
+
+**critical conditions check**
+
+* power: 167w (below critical power
+[36m2025-05-26 07:45:53,697[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:45:54,134[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:54,136[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 50w (normal)
+* breakdown of power consumption:
+	+ lights: 30w
+	+ equipment: 30w
+	+ hvac: 20w
+* zone temperatures:
+	+ zone 1: 19.89°c (normal)
+	+ zone 2: 19.2°c (normal)
+	+ zone 3: 19.79°c (
+[36m2025-05-26 07:45:54,137[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:45:54,798[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:54,799[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters within normal operating conditions.
+[36m2025-05-26 07:45:54,800[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:45:55,738[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:55,739[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 138w (below power alert threshold)
+* equipment power: 27w (normal)
+* hvac power: 55w (normal)
+* zone temperatures:
+	+ zone 1: 18.001154382317125°c (normal)
+	+ zone 2: 15.658857373619956°c (normal)
+* no clear equipment failure patterns detected)
+
+**priority and analysis summary
+[36m2025-05-26 07:45:55,742[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 07:45:56,534[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:56,537[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 50w (within normal range)
+* breakdown of power consumption by category:
+	+ lights: 40w
+	+ equipment: 30w
+	+ hvac: 20w
+* zone temperatures:
+	+ zone 1: 19.89°c
+	+ zone 2: 19.2°c
+	+ zone 3: 19.79°c
+[36m2025-05-26 07:45:56,537[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:45:57,064[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:57,065[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+the current power consumption is 152w, which is below the power breakdown of 300w. the temperature is 21.312577199440693°c, which is also within the normal range.
+
+**zone analysis**
+
+zone 1: 18.022220671181792°c, within normal range.
+zone 2: 15.44620289269382°c, within normal range.
+
+**critical condition check**
+[36m2025-05-26 07:45:57,065[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:45:57,677[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:57,678[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 230w, which is below the power alert threshold of 21.6°c. the zone temperatures are also within the normal range, with zone 1 at 22.39°c and zone 2 at 20.95°c. there are no clear equipment failure patterns detected.
+[36m2025-05-26 07:45:57,678[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-26 07:45:58,714[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:58,717[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 230w, which is below the power alert threshold of 21.7°c. the zone temperatures are also within the normal range, with zone 1 at 21.49°c and zone 2 at 20.33°c. there are no clear equipment failure patterns detected.
+[36m2025-05-26 07:45:58,717[0m - [32mINFO[0m - Added to normal batch (size: 5)
+[36m2025-05-26 07:45:58,717[0m - [32mINFO[0m - Processing batch of 5 normal messages
+[36m2025-05-26 07:45:59,181[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:59,182[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.89°c (normal)
+	+ zone 2: 19.2°c (normal)
+	+ zone 3: 19.79°c (normal)
+	+ zone 4: 18.89°c (normal)
+	+ zone 5: 17.2°c (normal
+[36m2025-05-26 07:45:59,182[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:45:59,735[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:45:59,736[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+the current power consumption is 161w, which is below the power alert threshold of 300w. the temperature is not provided, but the current thresholds indicate a temperature of 21.584243234009747°c, which is below the temperature alert threshold of 21.6°c.
+
+the zone temperatures are 19.534230385184784°c for zone 1 and 16.572792048932115°c
+[36m2025-05-26 07:45:59,737[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:46:00,742[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:00,743[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* power: 247w (below power alert threshold of 300w)
+* temperature: zone 1: 24.36°c (above temp alert threshold of 21.8°c), zone 2: 21.85°c (below temp alert threshold of 21.8°c)
+* equipment power: 98w (no clear equipment failure patterns)
+
+**critical conditions check**
+
+* power: 247w
+[36m2025-05-26 07:46:00,743[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:01,533[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:01,534[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 50w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.89°c (within normal range)
+	+ zone 2: 19.2°c (within normal range)
+	+ zone 3: 19.79°c (within normal range)
+	+ zone 4: 18.89°c (within normal range)
+	+ zone 5
+[36m2025-05-26 07:46:01,535[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:46:01,972[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:01,973[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 122w (within normal range)
+* zone temperatures: 
+  - zone 1: 19.68°c (within normal range)
+  - zone 2: 17.40°c (within normal range)
+* equipment power consumption: 48w (within normal range)
+* lights power consumption: 24w (within normal range)
+* hvac power consumption: 48w (within
+[36m2025-05-26 07:46:01,973[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:46:02,691[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:02,691[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 260w, which is below the power alert threshold of 21.8°c. the zone temperatures are also within the normal range, with zone_1 at 22.79°c and zone_2 at 20.13°c. there are no clear equipment failure patterns detected.
+[36m2025-05-26 07:46:02,691[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 07:46:03,728[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:03,729[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters.
+[36m2025-05-26 07:46:03,730[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-26 07:46:04,184[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:04,185[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* breakdown of power consumption by category:
+	+ lights: 50w
+	+ equipment: 36w
+	+ hvac: 24w
+* zone-wise power consumption:
+	+ zone 1: 19.89w
+	+ zone 2: 19.2w
+	+ zone 3: 19.79
+[36m2025-05-26 07:46:04,185[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:04,796[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:04,797[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 223w, which is below the power breakdown of 300w. the temperature is 21.600469380992863°c, which is also within the normal range.
+
+the zone temperatures are:
+
+* zone 1: 18.710634290176582°c
+* zone 2: 16.44400596505947°c
+
+both zone temperatures are within the normal range.
+
+**
+[36m2025-05-26 07:46:04,797[0m - [32mINFO[0m - Added to normal batch (size: 5)
+[36m2025-05-26 07:46:04,797[0m - [32mINFO[0m - Processing batch of 5 normal messages
+[36m2025-05-26 07:46:05,320[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:05,321[0m - [32mINFO[0m - Retrying request to /chat/completions in 2.000000 seconds
+[36m2025-05-26 07:46:07,820[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:07,822[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 177w, which is below the power alert threshold of 21.5°c. the zone temperatures are also within the normal range, with zone 1 at 18.31°c and zone 2 at 15.59°c. there are no critical conditions met, and the power consumption is not exceeding the 10%
+[36m2025-05-26 07:46:07,822[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:07,876[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:07,876[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:11,352[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:11,353[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.86°c (within normal range)
+	+ zone 2: 19.2°c (within normal range)
+	+ zone 3: 19.73°c (within normal range)
+	+ zone 4: 18.89°c (within normal range)
+	+ zone 5
+[36m2025-05-26 07:46:11,354[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:11,411[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:11,411[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 07:46:15,983[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:15,985[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters within normal operating conditions.
+[36m2025-05-26 07:46:15,985[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:46:16,048[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:16,049[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:19,631[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:19,632[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters within
+[36m2025-05-26 07:46:19,633[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:46:19,688[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:19,688[0m - [32mINFO[0m - Retrying request to /chat/completions in 2.000000 seconds
+[36m2025-05-26 07:46:22,187[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:22,188[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 123w (below power alert threshold)
+* zone temperatures: 
+	+ zone 1: 22.47°c (above temp alert threshold)
+	+ zone 2: 19.92°c (below temp alert threshold)
+* equipment power: 49w (no clear failure pattern)
+* hvac power: 49w (no clear failure pattern)
+
+**critical conditions check**
+
+* power:
+[36m2025-05-26 07:46:22,189[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:46:22,239[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:22,240[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 07:46:26,715[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:26,716[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 60w (within normal range)
+* equipment power: 36w (within normal range)
+* hvac power: 24w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.79°c (within normal range)
+	+ zone 2: 19.2°c (within normal range)
+	+ zone 3: 19.73°c (within normal
+[36m2025-05-26 07:46:26,717[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:26,778[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:26,780[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:30,285[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:30,285[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 203w, which is below the power alert threshold of 21.8°c. the zone temperatures are also within the normal range, with zone 1 at 19.99°c and zone 2 at 18.06°c. there are no clear equipment failure patterns detected.
+[36m2025-05-26 07:46:30,287[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 07:46:30,363[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:30,363[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:33,803[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:33,804[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 101w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 19.70387103741466°c (below the temperature alert threshold of 21.8°c)
+	+ zone 2: 18.48758120313338°c (below the temperature alert threshold of 21.8°c)
+* no clear equipment failure patterns
+[36m2025-05-26 07:46:33,804[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-26 07:46:33,861[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:33,861[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:37,352[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:37,352[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 70w (below the power alert threshold of 300w)
+* zone temperatures:
+	+ zone 1: 19.86°c (below the temperature alert threshold of 20.2°c)
+	+ zone 2: 19.23°c (below the temperature alert threshold of 20.2°c)
+	+ ...
+	+ zone 9: 17.0°c (
+[36m2025-05-26 07:46:37,354[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 07:46:37,417[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:37,417[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:40,920[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:40,922[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 263w (within normal range)
+* zone temperatures:
+	+ zone 1: 22.338875259076683°c (within normal range)
+	+ zone 2: 19.445046177128646°c (within normal range)
+* equipment power consumption: 105w (within normal range)
+* hvac power consumption: 105w (within normal range)
+
+**priority and
+[36m2025-05-26 07:46:40,923[0m - [32mINFO[0m - Added to normal batch (size: 5)
+[36m2025-05-26 07:46:40,923[0m - [32mINFO[0m - Processing batch of 5 normal messages
+[36m2025-05-26 07:46:40,977[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:40,977[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:44,451[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 0.0%
+[36m2025-05-26 07:46:44,717[0m - [32mINFO[0m - 🔽 Scaled DOWN normal subscribers: Removed normal/subscriber1
+[36m2025-05-26 07:46:44,775[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:44,775[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+**priority**: normal
+
+**analysis summary**:
+
+* total power consumption is 194 w, which is below the power alert threshold of 300w.
+* temperature in both zones (20.789753209468998°c and 18.66945400972883°c) are below the temperature alert threshold of 20.2°c.
+* no clear equipment failure patterns are observed.
+* the system is operating within normal range
+[36m2025-05-26 07:46:44,775[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:46:44,782[0m - [32mINFO[0m - 🔽 Scaled DOWN critical subscribers: Removed critical/subscriber1
+[36m2025-05-26 07:46:44,783[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 07:46:44,830[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:44,832[0m - [32mINFO[0m - Retrying request to /chat/completions in 2.000000 seconds
+[36m2025-05-26 07:46:47,333[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:47,334[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 129w, which is below the power alert threshold of 20.2°c. the zone temperatures are also within the normal range, with zone 1 at 23.24°c and zone 2 at 20.85°c. there is no indication of equipment failure patterns.
+[36m2025-05-26 07:46:47,335[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:46:47,385[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:47,386[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 07:46:50,924[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 07:46:51,967[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:51,969[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all systems operating within normal parameters.
+[36m2025-05-26 07:46:51,971[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:46:52,022[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:52,023[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:55,535[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:55,537[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 286w, which is below the power breakdown of 300w. the temperature is 20.173636363636362°c, which is below the temperature threshold of 20.2°c**.
+
+zone 1 has a temperature of 19.636101845894498°c, and zone 2 has a temperature of 17.5157392078266°c. both zones are within
+[36m2025-05-26 07:46:55,537[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:46:55,590[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:55,590[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:46:59,064[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:46:59,065[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 161w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 23.02°c (above the temperature alert threshold of 20.17°c)
+	+ zone 2: 21.06°c (below the temperature alert threshold of 20.2°c)
+* equipment power consumption: 64w (no clear failure pattern)
+[36m2025-05-26 07:46:59,066[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 07:46:59,134[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:46:59,134[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:00,927[0m - [32mINFO[0m - Processing batch of 3 normal messages
+[36m2025-05-26 07:47:02,694[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:02,696[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 580w, which is above the power alert threshold of 300w.
+* zone temperatures: all zones are within the temperature alert threshold of 20.2°c, with the highest temperature being 20.07°c in zone_1.
+* equipment power consumption: 348w, which is within the normal range.
+
+**critical conditions check**
+
+* power: 580w > 330.
+[36m2025-05-26 07:47:02,696[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:02,753[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:02,753[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:06,407[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:06,427[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: zone temperatures exceed critical threshold (22.2°c)
+[36m2025-05-26 07:47:06,435[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:47:06,553[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:06,557[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:10,090[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:10,093[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: zone
+[36m2025-05-26 07:47:10,095[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:47:10,152[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:10,154[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:10,929[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 07:47:13,704[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:13,705[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within thresholds, no critical
+[36m2025-05-26 07:47:13,705[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:47:13,764[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:13,765[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:17,360[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:17,363[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 430w, which is above the power alert threshold of 300w.
+* zone temperatures: all zones are within the temperature alert threshold of 20.3°c.
+* equipment power consumption: 258w, which is within the normal range.
+* hvac power consumption: 172w, which is within the normal range.
+
+**critical conditions check**
+
+* power consumption is above 330.0
+[36m2025-05-26 07:47:17,364[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:17,427[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:17,428[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:20,839[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:20,843[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within thresholds, no critical conditions detected.
+[36m2025-05-26 07:47:20,843[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 07:47:20,900[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:20,900[0m - [32mINFO[0m - Retrying request to /chat/completions in 2.000000 seconds
+[36m2025-05-26 07:47:20,930[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 07:47:23,562[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:23,564[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: total power consumption is
+[36m2025-05-26 07:47:23,565[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:47:23,624[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:23,625[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:27,291[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:27,294[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 250w, which is below the power alert threshold of 20.3°c. the zone temperatures are all below the critical temperature threshold of 22.3°c. there is no clear equipment failure pattern detected.
+[36m2025-05-26 07:47:27,296[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:27,396[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:27,397[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:30,903[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:30,905[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 381w, which is above the power alert threshold of 300w.
+* zone temperatures: zone 1: 21.77°c, zone 2: 20.61°c, both below the temperature alert threshold of 20.3°c.
+* equipment power consumption: 152w, no clear equipment failure patterns detected.
+
+**critical conditions check**
+
+* power consumption: 381w
+[36m2025-05-26 07:47:30,906[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:30,933[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 07:47:30,964[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:30,964[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:34,563[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:34,565[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 100w (within normal range)
+* breakdown of power consumption:
+	+ lights: 10w
+	+ equipment: 60w
+	+ hvac: 40w
+* zone temperatures:
+	+ zone 1: 20.43°c
+	+ zone 2: 19.86°c
+	+ zone 3: 20.03°c
+	+ zone
+[36m2025-05-26 07:47:34,565[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:47:34,652[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:34,653[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:38,249[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:38,253[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 443w, which is above the power alert threshold of 300w, but not critical (not above 330w with 10% buffer).
+* zone temperatures: zone 1 is 21.41°c and zone 2 is 20.29°c, both below the critical temperature threshold of 22.4°c (with 10% buffer).
+* equipment power: 177w,
+[36m2025-05-26 07:47:38,253[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:38,310[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:38,311[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:40,935[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 07:47:41,832[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:41,833[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 472w, which is above the power alert threshold of 300w, but below the critical condition of 330w.
+* zone temperatures: zone 1 is at 21.1867°c, and zone 2 is at 19.4909°c, both below the critical temperature threshold of 22.4°c.
+* equipment power: 188w, no clear equipment failure patterns detected
+[36m2025-05-26 07:47:41,833[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:41,891[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:41,892[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:44,783[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 83.3%
+[36m2025-05-26 07:47:44,785[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 07:47:45,417[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:45,419[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 100w (within normal range)
+* breakdown of power consumption:
+	+ lights: 10w
+	+ equipment: 60w
+	+ hvac: 40w
+* zone temperatures:
+	+ zone 1: 20.57°c
+	+ zone 2: 20.03°c
+	+ zone 3: 20.1°c
+	+
+[36m2025-05-26 07:47:45,419[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 07:47:45,477[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:45,477[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:49,001[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:49,003[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 484w, which is above the power alert threshold of 300w.
+* zone temperatures: zone 1: 20.257031865527054°c, zone 2: 18.233938938004993°c. both zones are below the temperature alert threshold of 20.4°c.
+* equipment power consumption: 193w, which is within the normal range.
+
+**critical
+[36m2025-05-26 07:47:49,004[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:49,059[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:49,060[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:50,937[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 07:47:52,686[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:52,687[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 475w, which is below the critical threshold of 330w. the zone temperatures are also within the normal range, with the highest temperature being 21.006142731104724°c in zone 1, which is below the critical threshold of 22.4°c. there is no indication of equipment failure patterns.
+[36m2025-05-26 07:47:52,687[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:52,745[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:52,746[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:56,374[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:56,376[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 368w, which is above the power alert threshold of 300w, but not critical (yet).
+* zone temperatures: zone 1: 21.52°c, zone 2: 19.21°c, both below the temperature alert threshold of 20.4°c.
+* equipment power consumption: 147w, no clear failure patterns detected.
+
+**priority and analysis summary**
+
+normal
+[36m2025-05-26 07:47:56,377[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:47:56,431[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:47:56,431[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:47:59,958[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:47:59,961[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 90w (within normal range)
+* zone temperatures:
+	+ zone 1: 20.73°c (within normal range)
+	+ zone 2: 20.17°c (within normal range)
+	+ zone 3: 20.2°c (within normal range)
+	+ zone 4: 18.93°c (within normal range)
+	+ zone 5
+[36m2025-05-26 07:47:59,962[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:48:00,021[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:48:00,022[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:48:03,627[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:48:03,631[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: high power consumption above 330w threshold and temperature in zone
+[36m2025-05-26 07:48:03,632[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:48:03,689[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:48:03,690[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 07:48:07,229[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 07:48:07,231[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 490w, which is above the power alert threshold of 300w.
+* zone temperatures: zone 1: 20.146338099038132°c, zone 2: 18.560807449060718°c. both zones are below the temperature alert threshold of 20.4°c.
+* equipment power consumption: 196w, which is within the normal range.
+
+**critical
+[36m2025-05-26 07:48:07,232[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 07:48:07,288[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 07:48:07,289[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:40:35,829[0m - [32mINFO[0m - [33mInitializing AIEnergyBroker...[0m
+[36m2025-05-26 08:40:36,007[0m - [32mINFO[0m - Started normal/subscriber1 (PID: 14758)
+[36m2025-05-26 08:40:36,013[0m - [32mINFO[0m - Started normal/subscriber2 (PID: 14759)
+[36m2025-05-26 08:40:36,019[0m - [32mINFO[0m - Started critical/subscriber1 (PID: 14760)
+[36m2025-05-26 08:40:36,028[0m - [32mINFO[0m - Started critical/subscriber2 (PID: 14761)
+[36m2025-05-26 08:40:36,056[0m - [32mINFO[0m - [32mConnected to MQTT broker[0m
+[36m2025-05-26 08:40:36,061[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 08:40:36,061[0m - [32mINFO[0m - [32m🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling[0m
+[36m2025-05-26 08:40:36,062[0m - [32mINFO[0m - Initial Thresholds: High Power: 450W, High Temp: 32°C
+[36m2025-05-26 08:40:36,062[0m - [32mINFO[0m - Auto-Scaling Configuration: Normal: 2/4, Critical: 2/3
+[36m2025-05-26 08:40:36,062[0m - [32mINFO[0m - [32mConnected to MQTT server (RC: 0)[0m
+[36m2025-05-26 08:40:36,065[0m - [32mINFO[0m - Subscribed to 'building/energy' topic
+[36m2025-05-26 08:40:40,643[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:40,646[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* breakdown of power consumption:
+	+ lights: 30w
+	+ equipment: 36w
+	+ hvac: 24w
+* zone temperatures:
+	+ zone 1: 19.89°c
+	+ zone 2: 19.20°c
+	+ zone 3: 19.79°c
+	+
+[36m2025-05-26 08:40:40,647[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:40:42,587[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:42,591[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.89°c (within normal range)
+	+ zone 2: 19.20°c (within normal range)
+	+ zone 3: 19.79°c (within normal range)
+	+ zone 4: 19.00°c (within normal range)
+	+ zone 5
+[36m2025-05-26 08:40:42,591[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:40:43,612[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:43,614[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+**priority**: normal
+
+**analysis summary**: the current power consumption is 218w, which is below the power alert threshold of 32°c. the zone temperatures are also within the acceptable range. no critical conditions are detected.
+
+here's a breakdown of the analysis:
+
+* power consumption: 218w is below the power alert threshold of 300w and above the lower threshold of 100w, so no power alert is
+[36m2025-05-26 08:40:43,618[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:44,451[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:44,455[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 248w (within normal range)
+* lights power: 49w (normal)
+* equipment power: 99w (normal)
+* hvac power: 99w (normal)
+* zone temperatures:
+	+ zone 1: 21.37309928791064°c (normal)
+	+ zone 2: 18.955667835794447°c (normal)
+* current thresholds:
+[36m2025-05-26 08:40:44,456[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:40:44,944[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:44,947[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 50w (within normal range)
+* breakdown of power consumption:
+	+ lights: 30w
+	+ equipment: 30w
+	+ hvac: 20w
+* zone temperatures:
+	+ zone 1: 19.89°c
+	+ zone 2: 19.20°c
+	+ zone 3: 19.79°c
+	+
+[36m2025-05-26 08:40:44,947[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:45,559[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:45,561[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters
+[36m2025-05-26 08:40:45,561[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:40:46,582[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:46,584[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 265w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 24.37°c (below the temperature alert threshold of 32°c)
+	+ zone 2: 23.24°c (below the temperature alert threshold of 32°c)
+* equipment power consumption: 106w (no clear equipment failure patterns detected)
+
+**priority
+[36m2025-05-26 08:40:46,585[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 08:40:47,094[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:47,096[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power: 50w (within normal range)
+* equipment power: 30w (within normal range)
+* hvac power: 20w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.89°c (within normal range)
+	+ zone 2: 19.20°c (within normal range)
+	+ zone 3: 19.79°c (within normal
+[36m2025-05-26 08:40:47,097[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:47,606[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:47,608[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 249w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 21.39°c (below the temperature alert threshold of 32°c
+	+ zone 2: 19.96°c (below the temperature alert threshold of 32°c)
+* equipment power consumption: 99w (no clear equipment failure patterns detected
+
+**priority
+[36m2025-05-26 08:40:47,609[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-26 08:40:48,528[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:48,530[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power: 252w, which is below the power alert threshold of 300w.
+* equipment power: 100w, which is within the normal range.
+* hvac power: 100w, which is within the normal range.
+* zone temperatures:
+	+ zone 1: 23.422508344350575°c, which is below the temperature alert threshold of 23.6°c.
+	+
+[36m2025-05-26 08:40:48,530[0m - [32mINFO[0m - Added to normal batch (size: 5)
+[36m2025-05-26 08:40:48,531[0m - [32mINFO[0m - Processing batch of 5 normal messages
+[36m2025-05-26 08:40:49,142[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:49,144[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis summary:**
+
+the current power consumption is 60w, which is below the power breakdown of 300w. the zone temperatures are all below 25.8°c. there are no clear equipment failure patterns. therefore, the system is operating normally.
+
+**priority:** normal
+
+**detailed breakdown:**
+* power: 60w (below 300w threshold)
+* zone temperatures:
+	+ zone 1: 19
+[36m2025-05-26 08:40:49,145[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:49,654[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:49,656[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 133w, which is below the power alert threshold of 300w. the temperature is 23.188916929608233°c, which is also below the temperature alert threshold of 23.2°c. the zone temperatures are 19.826396566909967°c and 16.883536132163066°c, both of which are below the critical temperature threshold of 25.
+[36m2025-05-26 08:40:49,656[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:50,473[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:50,474[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 203w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 22.52°c (below the temperature alert threshold of 23.2°c)
+	+ zone 2: 20.87°c (below the temperature alert threshold of 23.2°c)
+* equipment power: 81w (no clear equipment failure patterns detected
+[36m2025-05-26 08:40:50,475[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:40:50,985[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:50,989[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 50w (within normal range)
+* breakdown of power consumption:
+	+ lights: 40w
+	+ equipment: 30w
+	+ hvac: 20w
+* zone temperatures:
+	+ zone 1: 19.89°c
+	+ zone 2: 19.20°c
+	+ zone 3: 19.79°c
+	+
+[36m2025-05-26 08:40:50,990[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:51,599[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:51,601[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 183w, which is below the power breakdown of 300w. the temperature threshold is 23.22413952477326°c.
+
+**zone analysis**
+
+zone 1: 22.73693682821646°c (below threshold)
+zone 2: 21.023001548900424°c (below threshold)
+
+**critical conditions check**
+
+1. power: 183w (below
+[36m2025-05-26 08:40:51,602[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:40:52,521[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:52,524[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 173w, which is below the power alert threshold of 300w. the temperature is 23.138631441185566°c, which is also below the temperature alert threshold of 23.1°c.
+
+the zone temperatures are:
+
+* zone 1: 21.34270534579218°c
+* zone 2: 18.85601018737016°c
+
+both zone
+[36m2025-05-26 08:40:52,524[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:40:53,033[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:53,035[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.89°c (within normal range)
+	+ zone 2: 19.20°c (within normal range)
+	+ zone 3: 19.79°c (within normal range)
+	+ zone 4: 18.89°c (within normal range)
+	+ zone 5
+[36m2025-05-26 08:40:53,035[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:40:53,545[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:53,547[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 264w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 22.34°c (below the temperature alert threshold of 23.1°c)
+	+ zone 2: 19.52°c (below the temperature alert threshold of 23.1°c)
+* no clear equipment failure patterns detected
+
+**priority and analysis summary**
+[36m2025-05-26 08:40:53,548[0m - [32mINFO[0m - Added to normal batch (size: 3)
+[36m2025-05-26 08:40:54,465[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:54,466[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 131w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 21.80°c (below the temperature alert threshold of 23.0°c)
+	+ zone 2: 20.00°c (below the temperature alert threshold of 23.0°c)
+* equipment power consumption: 52w (no clear equipment failure patterns
+[36m2025-05-26 08:40:54,467[0m - [32mINFO[0m - Added to normal batch (size: 4)
+[36m2025-05-26 08:40:54,527[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:40:54,527[0m - [32mINFO[0m - Retrying request to /chat/completions in 1.000000 seconds
+[36m2025-05-26 08:40:56,104[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:56,105[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 60w (within normal range)
+* breakdown of power consumption:
+	+ lights: 50w
+	+ equipment: 36w
+	+ hvac: 24w
+* zone-wise power consumption:
+	+ zone 1: 19.86w
+	+ zone 2: 19.20w
+	+ zone 3: 19.73w
+[36m2025-05-26 08:40:56,108[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:40:56,164[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:40:56,165[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:40:58,531[0m - [32mINFO[0m - Processing batch of 4 normal messages
+[36m2025-05-26 08:40:59,792[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:40:59,797[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: power consumption is within normal limits, and temperature is
+[36m2025-05-26 08:40:59,798[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:40:59,865[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:40:59,867[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:03,375[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:03,378[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption is 285 w, which is below the power alert threshold of 300.0w.
+* zone temperatures are:
+	+ zone 1: 24.472263347257098°c, which is above the temperature alert threshold of 23.2°c.
+	+ zone 2: 22.49275668470544°c, which is below the temperature alert threshold of 23.2
+[36m2025-05-26 08:41:03,379[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:41:03,439[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:03,440[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:06,960[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:06,961[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power: 60w (within normal range)
+* equipment power: 36w (within normal range)
+* hvac power: 24w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.79°c (within normal range)
+	+ zone 2: 19.20°c (within normal range)
+	+ zone 3: 19.73°c (within normal
+[36m2025-05-26 08:41:06,966[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:07,032[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:07,035[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:41:08,535[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 08:41:11,567[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:11,569[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 179w, which is below the power alert threshold of 300w. the temperature is 22.97139215419491°c, which is below the temperature alert threshold of 23.0°c.
+
+the zone temperatures are:
+- zone 1: 19.30390241371102°c
+- zone 2: 16.559918181936375°c
+
+both zone temperatures
+[36m2025-05-26 08:41:11,569[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:41:11,627[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:11,627[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:15,254[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:15,259[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 117w (below the power alert threshold)
+* zone temperatures:
+	+ zone 1: 18.26°c (below the temperature alert threshold)
+	+ zone 2: 15.79°c (below the temperature alert threshold)
+* equipment power consumption: 46w (no clear equipment failure patterns)
+* hvac power consumption: 46w (no anomalies)
+
+**priority and analysis
+[36m2025-05-26 08:41:15,260[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:41:15,314[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:15,315[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:18,536[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 08:41:18,797[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:18,801[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 70w (within normal range)
+* breakdown of power consumption:
+	+ lights: 40w
+	+ equipment: 42w
+	+ hvac: 28w
+* zone-wise power consumption:
+	+ zone 1: 19.86w
+	+ zone 2: 19.23w
+	+ zone 3: 19.79w
+[36m2025-05-26 08:41:18,801[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:18,861[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:18,861[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:22,525[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:22,528[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 124w, which is below the power breakdown of 300w. the temperature is 20.166°c, which is below the temperature threshold of 20.2°c.
+
+**zone analysis**
+
+zone 1 has a temperature of 21.9366°c, and zone 2 has a temperature of 20.4510°c. both zones are below the critical temperature threshold of 22
+[36m2025-05-26 08:41:22,529[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:22,611[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:22,613[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:26,210[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:26,213[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters within normal operating ranges
+[36m2025-05-26 08:41:26,214[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:41:26,274[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:26,274[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:28,541[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 08:41:29,796[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:29,800[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 230w (within normal range)
+* zone temperatures:
+	+ zone 1: 19.93°c (normal)
+	+ zone 2: 19.36°c (normal)
+	+ zone 3: 19.79°c (normal)
+	+ zone 4: 18.89°c (normal)
+	+ zone 5: 17.1°c (normal
+[36m2025-05-26 08:41:29,803[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:41:29,883[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:29,884[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:41:34,505[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:34,509[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 263w (below power alert threshold)
+* zone temperatures: zone_1 = 22.885739251835183°c (above temperature alert threshold), zone_2 = 20.96886483019411°c (below temperature alert threshold)
+* equipment power: 105w (no clear failure pattern)
+
+**critical conditions check**
+
+* power: 263w (below critical threshold of 330
+[36m2025-05-26 08:41:34,509[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:34,590[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:34,590[0m - [32mINFO[0m - Retrying request to /chat/completions in 2.000000 seconds
+[36m2025-05-26 08:41:36,059[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 25.0%
+[36m2025-05-26 08:41:36,428[0m - [32mINFO[0m - 🔽 Scaled DOWN normal subscribers: Removed normal/subscriber1
+[36m2025-05-26 08:41:36,429[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 08:41:37,168[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:37,171[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 257w (below power alert threshold)
+* zone temperatures: 
+	+ zone 1: 20.63730755029517°c (below temp alert threshold)
+	+ zone 2: 19.297060414827843°c (below temp alert threshold)
+* equipment power: 102w (no clear equipment failure patterns)
+
+**critical conditions check**
+
+* power: 257w (
+[36m2025-05-26 08:41:37,172[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:41:37,232[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:37,232[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:41:38,545[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 08:41:41,879[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:41,881[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 580w, which is above the power alert threshold of 300w.
+* temperature: the highest zone temperature is 20.06999969482422°c in zone_1, which is below the temperature alert threshold of 20.2°c.
+* equipment power consumption: 348w, which is within the normal range.
+* hvac power consumption: 232w, which is within the
+[36m2025-05-26 08:41:41,884[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:41,954[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:41,954[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:45,462[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:45,463[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 206w (below power alert threshold)
+* lights power: 41w (no alert)
+* equipment power: 82w (no alert)
+* hvac power: 82w (no alert)
+* zone temperatures:
+	+ zone 1: 24.70°c (above temp alert threshold)
+	+ zone 2: 22.28°c (above temp alert threshold)
+* current
+[36m2025-05-26 08:41:45,466[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:41:45,525[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:45,526[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:48,548[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 08:41:49,147[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:49,149[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 244w, which is below the power alert threshold of 20.2°c. the zone temperatures are also within the normal range, with zone 1 at 22.1697°c and zone 2 at 20.7154°c. there is no equipment failure pattern detected.
+[36m2025-05-26 08:41:49,149[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:41:49,209[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:49,209[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:52,835[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:52,837[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 430w, which is above the power alert threshold of 300w, but not critical (not above 330w or below 50w).
+* zone temperatures: all zones are within the temperature alert threshold of 20.3°c, but not critical (not above 22.3°c).
+* equipment power: 258w, which does not indicate a clear equipment failure pattern.
+
+**priority
+[36m2025-05-26 08:41:52,839[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:41:52,900[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:52,901[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:56,522[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:41:56,523[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power: 234w (below power alert threshold)
+* zone temperatures: 
+	+ zone 1: 24.26223533869611°c (above temp alert threshold)
+	+ zone 2: 21.656590550183328°c (below temp alert threshold)
+* equipment power: 93w (no clear failure pattern)
+
+**critical conditions check**
+
+* power: below 330.0
+[36m2025-05-26 08:41:56,524[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:41:56,587[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:41:56,588[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:41:58,552[0m - [32mINFO[0m - Processing batch of 1 normal messages
+[36m2025-05-26 08:42:00,207[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:00,211[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: all parameters within normal operating conditions.
+[36m2025-05-26 08:42:00,211[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:42:00,274[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:00,274[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:03,791[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:03,793[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 250w (within normal range)
+* zone temperatures:
+	+ zone 1: 20.26°c (within normal range)
+	+ zone 2: 19.73°c (within normal range)
+	+ zone 3: 19.89°c (within normal range)
+	+ zone 4: 19.0°c (within normal range)
+	+ zone 5
+[36m2025-05-26 08:42:03,794[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:42:03,852[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:03,853[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:07,478[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:07,479[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+the current power consumption is 110w, which is below the power breakdown of 300w. the temperature threshold is 20.3°c, and the current zone temperatures are 21.85412465890686°c and 19.366421675917692°c.
+
+**critical conditions check**
+
+1. power > 330.0w (10% buffer) or < 50w: **false** (current
+[36m2025-05-26 08:42:07,481[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:07,538[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:07,538[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:08,556[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 08:42:11,062[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:11,064[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 285w, which is below the power alert threshold of 300w and within the normal range.
+* zone temperatures: zone 1 - 21.81986509037267°c, zone 2 - 19.157594882079227°c, both are below the temperature alert threshold of 20.3°c and within the normal range.
+* equipment power: 114w, which is
+[36m2025-05-26 08:42:11,066[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:42:11,149[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:11,152[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:42:15,773[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:15,777[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 100w (within normal range)
+* breakdown of power consumption:
+	+ lights: 10w
+	+ equipment: 60w
+	+ hvac: 40w
+* zone temperatures:
+	+ zone 1: 20.43°c
+	+ zone 2: 19.86°c
+	+ zone 3: 20.03°c
+	+
+[36m2025-05-26 08:42:15,778[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:42:15,846[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:15,846[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:18,559[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 08:42:19,459[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:19,463[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 175w (below the power alert threshold of 300w)
+* zone temperatures: 
+	+ zone 1: 22.10904719505356°c (below the critical temperature threshold of 22.4°c
+	+ zone 2: 19.666387595954472°c (below the critical temperature threshold of 22.4°c)
+* equipment power: 70
+[36m2025-05-26 08:42:19,463[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:19,526[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:19,527[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:23,145[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:23,147[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: system operating within normal parameters. power consumption is 179w, which is below the critical threshold of 330w. zone temperatures are also within the normal range, with zone_1 at 24.85°c and zone_2 at 22.41°c, both below the critical threshold of 22.4°c. no equipment failure patterns detected.
+[36m2025-05-26 08:42:23,150[0m - [32mINFO[0m - Added to normal batch (size: 1)
+[36m2025-05-26 08:42:23,209[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:23,209[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:26,729[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:26,731[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 100w (within normal range)
+* zone temperatures:
+	+ zone 1: 20.57°c (within normal range)
+	+ zone 2: 20.03°c (within normal range)
+	+ zone 3: 20.10°c (within normal range)
+	+ zone 4: 19.00°c (within normal range)
+	+ zone 5
+[36m2025-05-26 08:42:26,734[0m - [32mINFO[0m - Added to normal batch (size: 2)
+[36m2025-05-26 08:42:26,805[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:26,807[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:28,561[0m - [32mINFO[0m - Processing batch of 2 normal messages
+[36m2025-05-26 08:42:30,415[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:30,419[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption is 146w, which is below the power alert threshold of 300w.
+* the temperature threshold is 20.4°c, and the current temperature is 20.379374980926514°c, which is slightly above the threshold.
+* zone 1 temperature is 24.012649779925937°c, which is above the critical temperature threshold of 22.4°c (10%
+[36m2025-05-26 08:42:30,421[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:30,481[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:30,481[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:34,000[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:34,004[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 177w (within normal range)
+* zone temperatures: 
+	+ zone 1: 18.42°c (within normal range)
+	+ zone 2: 16.80°c (within normal range)
+* equipment power: 70w (within normal range)
+* hvac power: 70w (within normal range)
+
+**critical conditions check**
+
+* power: 177w (within
+[36m2025-05-26 08:42:34,005[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:34,062[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:34,063[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:36,430[0m - [32mINFO[0m - Current loads - Normal: 0.0%, Critical: 25.0%
+[36m2025-05-26 08:42:36,431[0m - [32mINFO[0m - Started auto-scaling engine (checks every 60s)
+[36m2025-05-26 08:42:37,583[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:37,586[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 90w (within normal range)
+* breakdown of power consumption:
+	+ lights: 10w
+	+ equipment: 54w
+	+ hvac: 36w
+* zone-wise power consumption:
+	+ zone 1: 20.73w
+	+ zone 2: 20.17w
+	+ zone 3: 20.20w
+[36m2025-05-26 08:42:37,587[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:37,650[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:37,651[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:42:42,192[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:42,194[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the provided energy system data:
+
+**analysis**
+
+* total power consumption: 70w (within normal range)
+* breakdown of power consumption:
+	+ lights: 30w
+	+ equipment: 42w
+	+ hvac: 28w
+* zone-wise power consumption:
+	+ zone 1: 20.86w
+	+ zone 2: 20.2w
+	+ zone 3: 20.2w
+[36m2025-05-26 08:42:42,194[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber2[0m
+[36m2025-05-26 08:42:42,253[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:42,253[0m - [32mINFO[0m - Retrying request to /chat/completions in 4.000000 seconds
+[36m2025-05-26 08:42:46,796[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:46,799[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**priority:** normal
+**analysis summary:** the system is operating within normal conditions. the total power consumption is 422w, which is below the critical threshold of 330w. the zone temperatures are also within the normal range, with zone 1 at 22.5°c and zone 2 at 19.01°c. there are no clear equipment failure patterns detected.
+[36m2025-05-26 08:42:46,800[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:46,860[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:46,860[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:50,383[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:50,387[0m - [32mINFO[0m - AI Analysis - Priority: normal, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power consumption: 80w (within normal range)
+* breakdown of power consumption by category:
+	+ lights: 30w
+	+ equipment: 48w
+	+ hvac: 32w
+* zone-wise power consumption:
+	+ zone 1: 20.89w
+	+ zone 3: 20.20w
+	+ zone 4: 18.96
+[36m2025-05-26 08:42:50,388[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:50,451[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:50,451[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
+[36m2025-05-26 08:42:54,069[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[36m2025-05-26 08:42:54,072[0m - [32mINFO[0m - AI Analysis - Priority: critical, Analysis: here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 384w, which is above the power alert threshold of 300w, but not critical (not above 330w with 10% buffer).
+* zone temperatures: zone 1 is at 24.12°c and zone 2 is at 21.59°c. zone 1 is above the temperature alert threshold of 20.4°c, but not critical (not above 22.
+[36m2025-05-26 08:42:54,072[0m - [32mINFO[0m - [31mCRITICAL ALERT! Routing to critical/subscriber1[0m
+[36m2025-05-26 08:42:54,133[0m - [32mINFO[0m - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[36m2025-05-26 08:42:54,134[0m - [32mINFO[0m - Retrying request to /chat/completions in 3.000000 seconds
