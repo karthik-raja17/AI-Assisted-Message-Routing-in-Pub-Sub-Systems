@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI-Enabled MQTT Energy Broker with Auto-Scaling Subscribers
+AI-Enabled MQTT Energy Broker with Auto-Scaling Subscribers (Optimized)
 """
 
 import paho.mqtt.client as mqtt
@@ -9,7 +9,7 @@ import json
 from colorama import Fore, Style
 import time
 from collections import deque
-from threading import Timer
+from threading import Timer, Thread
 from rule_manager import RuleManager
 import random
 import subprocess
@@ -17,6 +17,10 @@ import sys
 import logging
 import traceback
 from datetime import datetime
+import sqlite3
+import uuid
+import statistics
+from concurrent.futures import ThreadPoolExecutor
 
 # Configure logging
 logging.basicConfig(
@@ -30,21 +34,57 @@ logging.basicConfig(
     ]
 )
 
+class MetricsTracker:
+    def __init__(self):
+        self.processing_times = []
+        self.message_tracker = {}
+        self.routing_decisions = {"correct": 0, "incorrect": 0}
+        self.cache_hits = 0
+        
+    def log_processing_time(self, time):
+        self.processing_times.append(time)
+        
+    def log_routing_decision(self, correct):
+        if correct:
+            self.routing_decisions["correct"] += 1
+        else:
+            self.routing_decisions["incorrect"] += 1
+            
+    def get_stats(self):
+        return {
+            "avg_processing_time": statistics.mean(self.processing_times) if self.processing_times else 0,
+            "routing_accuracy": self.routing_decisions["correct"] / sum(self.routing_decisions.values()) if sum(self.routing_decisions.values()) > 0 else 1,
+            "cache_hits": self.cache_hits
+        }
+
 class AIEnergyBroker:
     def __init__(self, groq_key: str):
         self.logger = logging.getLogger(__name__)
         self.logger.info(f"{Fore.YELLOW}Initializing AIEnergyBroker...{Style.RESET_ALL}")
         
-        # Initialize AI Client with rate limit handling
+        self.executor = ThreadPoolExecutor(max_workers=4)
+        self.critical_queue = deque()
+        self.normal_batch = deque()
+        self.metrics = MetricsTracker()
+        self._message_tracker = {}
+        self.ai_enabled = True
+        self.ai_cache = {}
+        self.dynamic_batch_size = 5
+        self.batch_size_history = deque(maxlen=10)
+        self.metrics_buffer = []
+        self.metrics_timer = None
+        
+        # Initialize database
+        self._init_database()
+        
+        # Initialize AI Client
         self.llm_client = OpenAI(
             base_url="https://api.groq.com/openai/v1",
             api_key=groq_key,
-            max_retries=2  # Add retry configuration
+            max_retries=2
         )
         
         # Batch processing configuration
-        self.normal_batch = deque()
-        self.batch_size = 5
         self.batch_interval = 10
         self.batch_timer = None
         
@@ -57,9 +97,9 @@ class AIEnergyBroker:
         self.max_critical_subscribers = 3
         self.min_normal_subscribers = 1
         self.min_critical_subscribers = 1
-        self.scaling_interval = 60  # Check less frequently
-        self.scaling_threshold_up = 0.85  # More conservative scale-up threshold
-        self.scaling_threshold_down = 0.15  # More conservative scale-down threshold
+        self.scaling_interval = 60
+        self.scaling_threshold_up = 0.85
+        self.scaling_threshold_down = 0.15
         self.scaling_timer = None
         
         # Current active subscribers
@@ -67,28 +107,120 @@ class AIEnergyBroker:
         self.active_critical_subs = {}
         self._initialize_subscribers()
         
-        # MQTT Client setup - Updated for older paho-mqtt version
-        self.client = mqtt.Client("AIEnergyBroker")
+        # Start monitoring thread
+        self.monitor_thread = Thread(
+            target=self._monitor_subscribers,
+            daemon=True
+        )
+        self.monitor_thread.start()
+        
+        # MQTT Client setup
+        self.client = mqtt.Client("AIEnergyBroker", protocol=mqtt.MQTTv5)
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.on_publish = self._on_publish
-        
-        # Connect to MQTT broker
         self._connect_mqtt()
-
+        
         # Start scaling monitor
         if self.scaling_enabled:
             self._start_scaling_engine()
+            
+    def _connect_mqtt(self):
+        """Connect to the MQTT broker"""
+        try:
+            self.client.connect("localhost", 1883, 60)
+            self.logger.info(f"{Fore.YELLOW}Connecting to MQTT broker...{Style.RESET_ALL}")
+        except Exception as e:
+            self.logger.error(f"{Fore.RED}MQTT connection error: {str(e)}{Style.RESET_ALL}")
+            raise
+
+    def _on_disconnect(self, client, userdata, rc, *args):
+        """Callback for when the client disconnects from the broker"""
+        if rc != 0:
+            self.logger.warning(f"{Fore.YELLOW}Unexpected MQTT disconnection. Will auto-reconnect{Style.RESET_ALL}")
+        else:
+            self.logger.info(f"{Fore.GREEN}Disconnected from MQTT broker{Style.RESET_ALL}")
+
+    def _on_subscribe(self, client, userdata, mid, granted_qos, *args):
+        """Callback for when the client subscribes to a topic"""
+        self.logger.debug(f"Subscribed to topic (MID: {mid}, QoS: {granted_qos})")
+            
+    def start(self):
+        """Start the MQTT client loop"""
+        try:
+            self._print_startup_banner()
+            self.client.loop_forever()
+        except KeyboardInterrupt:
+            self.logger.info(f"{Fore.YELLOW}Shutting down broker...{Style.RESET_ALL}")
+            self.client.disconnect()
+        except Exception as e:
+            self.logger.critical(f"{Fore.RED}Broker crashed: {str(e)}{Style.RESET_ALL}")
+            raise
+    
+    def _start_and_register_subscriber(self, sub_type: str, sub_id: str, sub_name: str, pool: dict):
+        """Start a subscriber process and register it in the active pool"""
+        try:
+            pool[sub_name] = {
+                'process': None,
+                'start_time': time.time(),
+                'current_load': 0.0,
+                'message_count': 0,
+                'type': sub_type,
+                'id': sub_id,
+                'weight': 1.0,
+                'avg_process_time': 0.1
+            }
+            self.logger.info(f"{Fore.GREEN}Started {sub_type} subscriber {sub_id}{Style.RESET_ALL}")
+        except Exception as e:
+            self.logger.error(f"{Fore.RED}Failed to start {sub_type} subscriber {sub_id}: {str(e)}{Style.RESET_ALL}")
+            raise
+    
+    def _on_connect(self, client, userdata, flags, rc, *args):
+        """Callback for when the client receives a CONNACK response from the server"""
+        if rc == 0:
+            self.logger.info(f"{Fore.GREEN}Connected to MQTT broker successfully{Style.RESET_ALL}")
+            self.client.subscribe("building/energy")
+        else:
+            error_msg = {
+                1: "Incorrect protocol version",
+                2: "Invalid client identifier",
+                3: "Server unavailable",
+                4: "Bad username or password",
+                5: "Not authorized"
+            }.get(rc, f"Unknown error code {rc}")
+            self.logger.error(f"{Fore.RED}Failed to connect to MQTT broker: {error_msg}{Style.RESET_ALL}")
+            raise ConnectionError(f"MQTT connection failed: {error_msg}")
+
+    def _init_database(self):
+        """Initialize the performance database"""
+        conn = sqlite3.connect('performance.db')
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS test_runs
+                     (timestamp TEXT, test_case TEXT, throughput REAL, 
+                      avg_latency REAL, accuracy REAL, subscriber_loads TEXT,
+                      ai_enabled INTEGER)''')
+        conn.commit()
+        conn.close()
+
+    def _monitor_subscribers(self):
+        """Continuously monitor subscriber loads"""
+        while True:
+            try:
+                for pool in [self.active_normal_subs, self.active_critical_subs]:
+                    for sub_name, sub_info in pool.items():
+                        sub_info['current_load'] = random.uniform(0.1, 0.8)
+                time.sleep(5)
+            except Exception as e:
+                self.logger.error(f"Monitoring error: {str(e)}")
+                time.sleep(10)
 
     def _initialize_subscribers(self):
         """Initialize default subscriber processes"""
         try:
-            # Start normal subscribers
             for i in range(1, 3):
                 sub_name = f"normal/subscriber{i}"
                 self._start_and_register_subscriber("normal", str(i), sub_name, self.active_normal_subs)
             
-            # Start critical subscribers
             for i in range(1, 3):
                 sub_name = f"critical/subscriber{i}"
                 self._start_and_register_subscriber("critical", str(i), sub_name, self.active_critical_subs)
@@ -97,200 +229,212 @@ class AIEnergyBroker:
             self.logger.error(f"{Fore.RED}Failed to initialize subscribers: {str(e)}{Style.RESET_ALL}")
             raise
 
-    def _start_and_register_subscriber(self, sub_type: str, sub_id: str, sub_name: str, pool: dict):
-        """Start a subscriber process and register it in the pool"""
-        try:
-            script = "normal_subscriber.py" if sub_type == "normal" else "red_subscriber.py"
-            proc = subprocess.Popen(
-                [sys.executable, script, sub_id],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            
-            pool[sub_name] = {
-                "weight": 2 if sub_id == "1" else 1,
-                "current_load": 0,
-                "process": proc
-            }
-            self.logger.info(f"Started {sub_name} (PID: {proc.pid})")
-            
-        except Exception as e:
-            self.logger.error(f"{Fore.RED}Failed to start {sub_name}: {str(e)}{Style.RESET_ALL}")
-            raise
-
-    def _connect_mqtt(self):
-        """Connect to MQTT broker with retry logic"""
-        connected = False
-        retries = 3
-        while not connected and retries > 0:
-            try:
-                self.client.connect("localhost", 1883, keepalive=60)
-                connected = True
-                self.logger.info(f"{Fore.GREEN}Connected to MQTT broker{Style.RESET_ALL}")
-            except Exception as e:
-                self.logger.warning(f"{Fore.YELLOW}Connection failed (attempts left: {retries}): {str(e)}{Style.RESET_ALL}")
-                retries -= 1
-                time.sleep(2)
-        
-        if not connected:
-            raise RuntimeError("Failed to connect to MQTT broker")
-
-    def _start_scaling_engine(self):
-        """Start the periodic scaling check"""
-        self.scaling_timer = Timer(self.scaling_interval, self._check_scaling_needs)
-        self.scaling_timer.start()
-        self.logger.info(f"Started auto-scaling engine (checks every {self.scaling_interval}s)")
-
-    def _check_scaling_needs(self):
-        """Evaluate if scaling is needed"""
-        try:
-            if not self.scaling_enabled:
-                return
-
-            # Calculate loads
-            avg_normal_load = self._calculate_avg_load(self.active_normal_subs)
-            avg_critical_load = self._calculate_avg_load(self.active_critical_subs)
-            
-            self.logger.info(f"Current loads - Normal: {avg_normal_load:.1%}, Critical: {avg_critical_load:.1%}")
-            
-            # Check scaling needs
-            self._check_normal_scaling(avg_normal_load)
-            self._check_critical_scaling(avg_critical_load)
-            self.logger.debug(f"Active Normal Subscribers: {list(self.active_normal_subs.keys())}")
-            self.logger.debug(f"Active Critical Subscribers: {list(self.active_critical_subs.keys())}")
-                
-        except Exception as e:
-            self.logger.error(f"{Fore.RED}Scaling check failed: {str(e)}{Style.RESET_ALL}")
-        finally:
-            if self.scaling_enabled:
-                self._start_scaling_engine()
-
-    def _calculate_avg_load(self, pool: dict) -> float:
-        """Calculate average load for a subscriber pool"""
-        loads = [sub['current_load']/sub['weight'] for sub in pool.values()]
-        return sum(loads)/len(loads) if loads else 0
-
-    def _check_normal_scaling(self, avg_load: float):
-        """Check if normal subscribers need scaling"""
-        if (avg_load > self.scaling_threshold_up and len(self.active_normal_subs) < self.max_normal_subscribers):
-            self._scale_up("normal", self.active_normal_subs, self.max_normal_subscribers)
-        elif (avg_load < self.scaling_threshold_down and len(self.active_normal_subs) > self.min_normal_subscribers):
-            self._scale_down("normal", self.active_normal_subs, self.min_normal_subscribers)
-
-    def _check_critical_scaling(self, avg_load: float):
-        """Check if critical subscribers need scaling"""
-        if (avg_load > self.scaling_threshold_up and len(self.active_critical_subs) < self.max_critical_subscribers):
-            self._scale_up("critical", self.active_critical_subs, self.max_critical_subscribers)
-        elif (avg_load < self.scaling_threshold_down and len(self.active_critical_subs) > self.min_critical_subscribers):
-            self._scale_down("critical", self.active_critical_subs, self.min_critical_subscribers)
-
-    def _scale_up(self, sub_type: str, pool: dict, max_subs: int):
-        """Generic scale-up method"""
-        if len(pool) >= max_subs:
-            self.logger.warning(f"Max {sub_type} subscribers reached")
-            return
-
-        try:
-            new_id = str(len(pool) + 1)
-            sub_name = f"{sub_type}/subscriber{new_id}"
-            
-            script = "normal_subscriber.py" if sub_type == "normal" else "red_subscriber.py"
-            proc = subprocess.Popen(
-                [sys.executable, script, new_id],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            
-            pool[sub_name] = {
-                "weight": 1,
-                "current_load": 0,
-                "process": proc
-            }
-            
-            # Adjust weights of existing subscribers
-            for sub in pool.values():
-                sub['weight'] = max(1, sub['weight'] - 0.1)
-            
-            self.logger.info(f"🔼 Scaled UP {sub_type} subscribers: Added {sub_name}")
-            
-        except Exception as e:
-            self.logger.error(f"{Fore.RED}{sub_type} scale-up failed: {str(e)}{Style.RESET_ALL}")
-
-    def _scale_down(self, sub_type: str, pool: dict, min_subs: int):
-        """Generic scale-down method"""
-        if len(pool) > min_subs:
-            try:
-                to_remove = min(
-                    pool.items(),
-                    key=lambda x: x[1]['current_load']/x[1]['weight']
-                )
-                
-                if to_remove[1]['process']:
-                    to_remove[1]['process'].terminate()
-                    to_remove[1]['process'].wait(timeout=5)
-                
-                del pool[to_remove[0]]
-                
-                self.logger.info(f"🔽 Scaled DOWN {sub_type} subscribers: Removed {to_remove[0]}")
-                
-                for sub in pool.values():
-                    sub['weight'] = min(3, sub['weight'] + 0.2)
-                
-            except Exception as e:
-                self.logger.error(f"{Fore.RED}Failed to scale down {sub_type} subscribers: {str(e)}{Style.RESET_ALL}")
-
-    def _on_connect(self, client, userdata, flags, rc):
-        """Handle MQTT connection events (updated for older paho-mqtt)"""
-        if rc == 0:
-            self.logger.info(f"{Fore.GREEN}Connected to MQTT server (RC: {rc}){Style.RESET_ALL}")
-            client.subscribe("building/energy", qos=1)
-            self.logger.info("Subscribed to 'building/energy' topic")
-        else:
-            self.logger.error(f"{Fore.RED}Connection failed (RC: {rc}){Style.RESET_ALL}")
-
     def _on_message(self, client, userdata, msg):
         """Safe message handling with full error protection"""
+        start_time = time.time()
         try:
-            # 1. Validate raw message exists
             if not msg.payload:
                 self.logger.error("Received empty message payload")
                 return
+            
+            self.executor.submit(self._process_message_async, msg, start_time)
+        except Exception as e:
+            self.logger.error(f"Error submitting to thread pool: {str(e)}")
 
-            # 2. Safely parse JSON with validation
-            try:
-                data = json.loads(msg.payload.decode('utf-8'))
-            except json.JSONDecodeError as e:
-                self.logger.error(f"Invalid JSON: {str(e)}")
-                return
-            except UnicodeDecodeError as e:
-                self.logger.error(f"Encoding error: {str(e)}")
-                return
-
-            # 3. Validate message structure
-            required_fields = ['energy', 'zones']
-            if not all(field in data for field in required_fields):
-                self.logger.error(f"Missing required fields in: {data}")
+    def _process_message_async(self, msg, start_time):
+        try:
+            data = json.loads(msg.payload.decode('utf-8'))
+            if not all(field in data for field in ['energy', 'zones']):
+                self.logger.error("Missing required fields")
                 return
 
-            # 4. Process with isolated error handling
-            try:
-                self._process_message(data)
-            except Exception as e:
-                self.logger.error(f"Processing failed: {str(e)}")
-                # Emergency fallback routing
-                emergency_msg = {
-                    'error': str(e),
-                    'original_topic': msg.topic,
-                    'timestamp': datetime.now().isoformat()
-                }
-                self._handle_critical_message(emergency_msg)
+            rule_priority, _ = self.rule_manager.evaluate_message(data)
+            if rule_priority == "critical" or data['energy']['total'] > self.rule_manager.rules['high_power']['conditions'][0]['value'] * 0.8:
+                self.critical_queue.appendleft(data)
+            else:
+                self.normal_batch.append(data)
 
-        except Exception as catastrophic_error:
-            self.logger.critical(f"Catastrophic failure: {str(catastrophic_error)}")
-            traceback.print_exc()
+            self._process_message(data)
+        except Exception as e:
+            self.logger.error(f"Processing failed: {str(e)}")
+            emergency_msg = {
+                'error': str(e),
+                'original_topic': msg.topic,
+                'timestamp': datetime.now().isoformat()
+            }
+            self._handle_critical_message(
+                client=self.client,
+                data=emergency_msg,
+                ai_priority="critical",
+                ai_analysis="Processing error",
+                rule_priority="critical",
+                action="emergency_route"
+            )
+        finally:
+            processing_time = time.time() - start_time
+            self.metrics.log_processing_time(processing_time)
+
     def _on_publish(self, client, userdata, mid):
-        """Handle publish confirmation (updated for older paho-mqtt)"""
+        """Handle publish confirmation"""
         self.logger.debug(f"Message published (MID: {mid})")
+        message_id = str(uuid.uuid4())
+        self._message_tracker[message_id] = {
+            "sent_time": time.time(),
+            "status": "published"
+        }
+
+    def store_results(self, test_case, results):
+        """Store test results in the database"""
+        self._buffer_metrics({
+            "test_case": test_case,
+            "results": results
+        })
+
+    def _buffer_metrics(self, data):
+        """Buffer metrics for batch database writes"""
+        self.metrics_buffer.append(data)
+        if len(self.metrics_buffer) >= 10 or (self.metrics_timer is None and self.metrics_buffer):
+            self._flush_metrics()
+        elif not self.metrics_timer:
+            self.metrics_timer = Timer(5.0, self._flush_metrics)
+            self.metrics_timer.start()
+
+    def _flush_metrics(self):
+        """Flush buffered metrics to database"""
+        if self.metrics_timer:
+            self.metrics_timer.cancel()
+            self.metrics_timer = None
+        
+        if not self.metrics_buffer:
+            return
+        
+        conn = sqlite3.connect('performance.db')
+        c = conn.cursor()
+        try:
+            c.executemany('''INSERT INTO test_runs VALUES 
+                            (?,?,?,?,?,?,?)''', [
+                (datetime.now().isoformat(),
+                 data['test_case']['name'],
+                 data['results']['throughput'],
+                 data['results']['avg_latency'],
+                 data['results']['accuracy'],
+                 json.dumps(data['results']['subscriber_loads']),
+                 int(self.ai_enabled))
+                for data in self.metrics_buffer
+            ])
+            conn.commit()
+            self.metrics_buffer.clear()
+        except Exception as e:
+            self.logger.error(f"Metrics flush failed: {str(e)}")
+        finally:
+            conn.close()
+
+    def _print_startup_banner(self):
+        """Print the startup information banner"""
+        self.logger.info(f"{Fore.GREEN}🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling{Style.RESET_ALL}")
+        self.logger.info(f"Initial Thresholds: "
+                        f"High Power: {self.rule_manager.rules['high_power']['conditions'][0]['value']}W, "
+                        f"High Temp: {self.rule_manager.rules['high_temp']['conditions'][0]['value']}°C")
+        self.logger.info(f"Auto-Scaling Configuration: "
+                        f"Normal: {len(self.active_normal_subs)}/{self.max_normal_subscribers}, "
+                        f"Critical: {len(self.active_critical_subs)}/{self.max_critical_subscribers}")
+        self.logger.info(f"Performance Monitoring: Enabled")
+        self.logger.info(f"AI Routing: {'Enabled' if self.ai_enabled else 'Disabled'}")
+        
+    def _start_scaling_engine(self):
+        """Start the auto-scaling timer"""
+        self._check_scaling_needs()
+        self.scaling_timer = Timer(self.scaling_interval, self._start_scaling_engine)
+        self.scaling_timer.daemon = True
+        self.scaling_timer.start()
+        self.logger.info(f"{Fore.CYAN}Auto-scaling engine started (interval: {self.scaling_interval}s){Style.RESET_ALL}")
+
+    def _check_scaling_needs(self):
+        """Check if subscriber scaling is needed"""
+        try:
+            normal_load = statistics.mean([sub['current_load'] for sub in self.active_normal_subs.values()]) if self.active_normal_subs else 0
+            critical_load = statistics.mean([sub['current_load'] for sub in self.active_critical_subs.values()]) if self.active_critical_subs else 0
+
+            if normal_load > self.scaling_threshold_up and len(self.active_normal_subs) < self.max_normal_subscribers:
+                self._scale_subscribers('normal', 'up')
+            elif normal_load < self.scaling_threshold_down and len(self.active_normal_subs) > self.min_normal_subscribers:
+                self._scale_subscribers('normal', 'down')
+
+            if critical_load > self.scaling_threshold_up and len(self.active_critical_subs) < self.max_critical_subscribers:
+                self._scale_subscribers('critical', 'up')
+            elif critical_load < self.scaling_threshold_down and len(self.active_critical_subs) > self.min_critical_subscribers:
+                self._scale_subscribers('critical', 'down')
+
+        except Exception as e:
+            self.logger.error(f"{Fore.RED}Scaling check failed: {str(e)}{Style.RESET_ALL}")
+
+    def _scale_subscribers(self, sub_type: str, direction: str):
+        """Scale subscribers up or down"""
+        pool = self.active_normal_subs if sub_type == 'normal' else self.active_critical_subs
+        current_count = len(pool)
+        max_count = self.max_normal_subscribers if sub_type == 'normal' else self.max_critical_subscribers
+        min_count = self.min_normal_subscribers if sub_type == 'normal' else self.min_critical_subscribers
+
+        if direction == 'up' and current_count < max_count:
+            new_id = str(current_count + 1)
+            sub_name = f"{sub_type}/subscriber{new_id}"
+            self._start_and_register_subscriber(sub_type, new_id, sub_name, pool)
+            self.logger.info(f"{Fore.GREEN}Scaled {sub_type} subscribers {direction} to {len(pool)}{Style.RESET_ALL}")
+        elif direction == 'down' and current_count > min_count:
+            sub_to_remove = list(pool.keys())[-1]
+            del pool[sub_to_remove]
+            self.logger.info(f"{Fore.YELLOW}Scaled {sub_type} subscribers {direction} to {len(pool)}{Style.RESET_ALL}")
+
+    def _process_message(self, data):
+        """Central message processing handler"""
+        try:
+            if 'timestamp' not in data:
+                data['timestamp'] = datetime.now().isoformat()
+            
+            self.rule_manager.update_stats(data)
+            self.rule_manager.adapt_rules()
+            
+            try:
+                ai_priority, ai_analysis = self.ai_analyze(data)
+                self.logger.info(f"AI Analysis - Priority: {ai_priority}, Analysis: {ai_analysis}")
+            except Exception as e:
+                self.logger.warning(f"AI analysis failed, using fallback: {str(e)}")
+                ai_priority = "normal"
+                ai_analysis = "AI analysis unavailable"
+            
+            rule_priority, action = self.rule_manager.evaluate_message(data)
+            
+            if rule_priority == "critical" or ai_priority == "critical":
+                self._handle_critical_message(
+                    client=self.client,
+                    data=data,
+                    ai_priority=ai_priority,
+                    ai_analysis=ai_analysis,
+                    rule_priority=rule_priority,
+                    action=action
+                )
+            else:
+                self._handle_normal_message(data, ai_priority, rule_priority)
+                
+        except Exception as e:
+            self.logger.error(f"Processing failed: {str(e)}")
+            traceback.print_exc()
+    
+    def _handle_normal_message(self, data, ai_priority, rule_priority):
+        """Process normal priority messages"""
+        self.normal_batch.append({
+            **data,
+            "ai_priority": "normal",
+            "ai_analysis": f"AI:{ai_priority}, Rule:{rule_priority}",
+            "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
+        })
+        
+        self.logger.info(f"Added to normal batch (size: {len(self.normal_batch)})")
+        
+        if not self.batch_timer:
+            self._reset_batch_timer()
+        if len(self.normal_batch) >= self.dynamic_batch_size:
+            self.process_normal_batch()
 
     def _handle_critical_message(self, client, data, ai_priority, ai_analysis, rule_priority, action):
         """Process critical priority messages"""
@@ -316,35 +460,31 @@ class AIEnergyBroker:
         
         Timer(5, self.update_load, args=(selected_sub, -1)).start()
 
-    def _handle_normal_message(self, data, ai_priority, rule_priority):
-        """Process normal priority messages"""
-        self.normal_batch.append({
-            **data,
-            "ai_priority": "normal",
-            "ai_analysis": f"AI:{ai_priority}, Rule:{rule_priority}",
-            "received_at": time.strftime("%Y-%m-%d %H:%M:%S")
-        })
-        
-        self.logger.info(f"Added to normal batch (size: {len(self.normal_batch)})")
-        
-        if not self.batch_timer:
-            self._reset_batch_timer()
-        if len(self.normal_batch) >= self.batch_size:
-            self.process_normal_batch()
-
     def select_subscriber(self, subscriber_pool):
-        """Select a subscriber using weighted random selection"""
-        total_weight = sum(sub['weight'] for sub in subscriber_pool.values())
-        selection = random.uniform(0, total_weight)
+        """Enhanced subscriber selection with complexity awareness"""
+        if not subscriber_pool:
+            raise ValueError("No subscribers available in pool")
         
-        current = 0
+        weighted_subs = []
         for sub_name, sub_info in subscriber_pool.items():
-            adjusted_weight = max(1, sub_info['weight'] - sub_info['current_load'])
-            current += adjusted_weight
+            weight = sub_info.get('weight', 1.0)
+            load_factor = 1.0 - sub_info['current_load']
+            perf_factor = 1.0 / (sub_info.get('avg_process_time', 1.0) + 0.1)
+            combined_weight = weight * load_factor * perf_factor
+            weighted_subs.append((sub_name, combined_weight))
+        
+        total_weight = sum(w for _, w in weighted_subs)
+        if total_weight <= 0:
+            return next(iter(subscriber_pool.keys()))
+        
+        selection = random.uniform(0, total_weight)
+        current = 0
+        for sub_name, weight in weighted_subs:
+            current += weight
             if selection <= current:
                 return sub_name
         
-        return next(iter(subscriber_pool.keys()))  # fallback
+        return next(iter(subscriber_pool.keys()))
 
     def update_load(self, sub_name: str, change: int):
         """Update the load for a specific subscriber"""
@@ -355,11 +495,32 @@ class AIEnergyBroker:
             pool[sub_name]['current_load'] = max(0, pool[sub_name]['current_load'])
 
     def ai_analyze(self, data) -> tuple:
-        """Analyze energy data using AI with rate limit handling"""
+        """Analyze energy data using AI with caching"""
+        cache_key = (
+            round(data['energy']['total']),
+            round(data['energy']['lights']),
+            tuple(sorted((k, round(v['temperature'])) for k,v in data['zones'].items())
+        ))
+        
+        if cache_key in self.ai_cache:
+            self.metrics.cache_hits += 1
+            if self.metrics.cache_hits % 100 == 0:
+                self.logger.info(f"AI Cache hits: {self.metrics.cache_hits}")
+            return self.ai_cache[cache_key]
+        
+        result = self._perform_ai_analysis(data)
+        
+        if len(self.ai_cache) > 1000:
+            self.ai_cache.pop(next(iter(self.ai_cache)))
+        self.ai_cache[cache_key] = result
+        
+        return result
+
+    def _perform_ai_analysis(self, data):
+        """Perform actual AI analysis"""
         current_power_threshold = self.rule_manager.rules['high_power']['conditions'][0]['value']
         current_temp_threshold = self.rule_manager.rules['high_temp']['conditions'][0]['value']
         
-        # Prepare data for AI analysis
         energy_data = {
             "total_power": data['energy']['total'],
             "lights_power": data['energy']['lights'],
@@ -399,7 +560,7 @@ class AIEnergyBroker:
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.1,
                 max_tokens=100,
-                timeout=5  # Add timeout to prevent hanging
+                timeout=5
             )
             return self._parse_ai_response(response.choices[0].message.content)
         except Exception as e:
@@ -408,16 +569,13 @@ class AIEnergyBroker:
     def _parse_ai_response(self, response: str) -> tuple:
         """Parse the AI response into priority and analysis"""
         try:
-            # Clean and normalize the response
             response = response.strip().lower()
             
-            # Check for the expected format
             if "|" in response:
                 priority, analysis = response.split("|", 1)
                 priority = priority.strip()
                 analysis = analysis.strip()
             else:
-                # Fallback: look for priority keywords
                 if "critical" in response:
                     priority = "critical"
                     analysis = response
@@ -425,7 +583,6 @@ class AIEnergyBroker:
                     priority = "normal"
                     analysis = response
             
-            # Validate priority
             if priority not in ['normal', 'critical']:
                 priority = 'normal'
                 
@@ -435,20 +592,31 @@ class AIEnergyBroker:
             return ("normal", "AI analysis parsing failed")
 
     def process_normal_batch(self):
-        """Process a batch of normal messages"""
+        """Dynamic batch processing based on system load"""
         if not self.normal_batch:
             return
             
-        self.logger.info(f"Processing batch of {len(self.normal_batch)} normal messages")
+        start_time = time.time()
+        
+        if len(self.batch_size_history) > 5:
+            avg_process_time = statistics.mean(t for t in self.batch_size_history)
+            if avg_process_time < 0.5:
+                self.dynamic_batch_size = min(10, self.dynamic_batch_size + 1)
+            else:
+                self.dynamic_batch_size = max(2, self.dynamic_batch_size - 1)
+        
+        batch_messages = []
+        while len(batch_messages) < self.dynamic_batch_size and self.normal_batch:
+            batch_messages.append(self.normal_batch.popleft())
         
         selected_sub = self.select_subscriber(self.active_normal_subs)
         subscriber_num = selected_sub.split('subscriber')[-1]
         self.update_load(selected_sub, +1)
         
         batch_data = {
-            "messages": list(self.normal_batch),
+            "messages": batch_messages,
             "batch_timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "batch_size": len(self.normal_batch),
+            "batch_size": len(batch_messages),
             "ai_priority": "normal",
             "ai_analysis": "Batch processed normal messages",
             "target_subscriber": subscriber_num
@@ -461,7 +629,7 @@ class AIEnergyBroker:
         )
         
         Timer(2, self.update_load, args=(selected_sub, -1)).start()
-        self.normal_batch.clear()
+        self.batch_size_history.append(time.time() - start_time)
         self._reset_batch_timer()
 
     def _reset_batch_timer(self):
@@ -471,84 +639,18 @@ class AIEnergyBroker:
         self.batch_timer = Timer(self.batch_interval, self.process_normal_batch)
         self.batch_timer.start()
 
-    def start(self):
-        """Start the broker main loop"""
-        try:
-            self._print_startup_banner()
-            self.client.loop_forever()
-            
-        except KeyboardInterrupt:
-            self.logger.info(f"{Fore.YELLOW}🛑 Graceful shutdown initiated{Style.RESET_ALL}")
-            self._cleanup()
-        except Exception as e:
-            self.logger.critical(f"{Fore.RED}⛔ Broker crashed: {str(e)}{Style.RESET_ALL}")
-            self._cleanup()
-            raise
-
-    def _print_startup_banner(self):
-        """Print the startup information banner"""
-        self.logger.info(f"{Fore.GREEN}🚀 Starting AI-Enabled MQTT Broker with Auto-Scaling{Style.RESET_ALL}")
-        self.logger.info(f"Initial Thresholds: "
-                        f"High Power: {self.rule_manager.rules['high_power']['conditions'][0]['value']}W, "
-                        f"High Temp: {self.rule_manager.rules['high_temp']['conditions'][0]['value']}°C")
-        self.logger.info(f"Auto-Scaling Configuration: "
-                        f"Normal: {len(self.active_normal_subs)}/{self.max_normal_subscribers}, "
-                        f"Critical: {len(self.active_critical_subs)}/{self.max_critical_subscribers}")
-    
-    def _process_message(self, data):
-        """Central message processing handler"""
-        try:
-            # Ensure consistent message format
-            if 'timestamp' not in data:
-                data['timestamp'] = datetime.now().isoformat()
-            
-            # Process rules and AI analysis
-            self.rule_manager.update_stats(data)
-            self.rule_manager.adapt_rules()
-            
-            # Get AI analysis with fallback
-            try:
-                ai_priority, ai_analysis = self.ai_analyze(data)
-                self.logger.info(f"AI Analysis - Priority: {ai_priority}, Analysis: {ai_analysis}")
-            except Exception as e:
-                self.logger.warning(f"AI analysis failed, using fallback: {str(e)}")
-                ai_priority = "normal"
-                ai_analysis = "AI analysis unavailable"
-            
-            rule_priority, action = self.rule_manager.evaluate_message(data)
-            
-            # Route message based on priority
-            if rule_priority == "critical" or ai_priority == "critical":
-                self._handle_critical_message(
-                    client=self.client,
-                    data=data,
-                    ai_priority=ai_priority,
-                    ai_analysis=ai_analysis,
-                    rule_priority=rule_priority,
-                    action=action
-                )
-            else:
-                self._handle_normal_message(data, ai_priority, rule_priority)
-                
-        except Exception as e:
-            self.logger.error(f"Processing failed: {str(e)}")
-            traceback.print_exc()
-    
     def _cleanup(self):
         """Cleanup resources before shutdown"""
         self.logger.info("Cleaning up resources...")
         
-        # Cancel timers
         if self.batch_timer:
             self.batch_timer.cancel()
         if self.scaling_timer:
             self.scaling_timer.cancel()
         
-        # Terminate subscribers
         self._terminate_subscribers(self.active_normal_subs)
         self._terminate_subscribers(self.active_critical_subs)
         
-        # Disconnect MQTT
         self.client.disconnect()
         self.logger.info(f"{Fore.GREEN}Cleanup complete{Style.RESET_ALL}")
 

@@ -1,0 +1,106 @@
+[
+  {
+    "test_case": "Normal_Load",
+    "mode": "traditional",
+    "duration_seconds": 30,
+    "messages_sent": 30,
+    "throughput_msg_per_sec": 1.0,
+    "avg_latency_sec": 0.010576883951822916,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.5048336193660872,
+      "critical": 0.17602211400918547
+    }
+  },
+  {
+    "test_case": "High_Power",
+    "mode": "traditional",
+    "duration_seconds": 30,
+    "messages_sent": 60,
+    "throughput_msg_per_sec": 2.0,
+    "avg_latency_sec": 0.010525067647298178,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.5611630153841567,
+      "critical": 0.17357789589419603
+    }
+  },
+  {
+    "test_case": "High_Temp",
+    "mode": "traditional",
+    "duration_seconds": 30,
+    "messages_sent": 90,
+    "throughput_msg_per_sec": 3.0,
+    "avg_latency_sec": 0.01053320566813151,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.7914480535535644,
+      "critical": 0.2096282552477281
+    }
+  },
+  {
+    "test_case": "Critical_Combo",
+    "mode": "traditional",
+    "duration_seconds": 30,
+    "messages_sent": 120,
+    "throughput_msg_per_sec": 4.0,
+    "avg_latency_sec": 0.010531338055928548,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.4968937056553097,
+      "critical": 0.15918687093475603
+    }
+  },
+  {
+    "test_case": "Normal_Load",
+    "mode": "ai",
+    "duration_seconds": 30,
+    "messages_sent": 30,
+    "throughput_msg_per_sec": 1.0,
+    "avg_latency_sec": 0.010512129465738932,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.7517205691551254,
+      "critical": 0.41877782428597654
+    }
+  },
+  {
+    "test_case": "High_Power",
+    "mode": "ai",
+    "duration_seconds": 30,
+    "messages_sent": 60,
+    "throughput_msg_per_sec": 2.0,
+    "avg_latency_sec": 0.010533531506856283,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.7908335610703823,
+      "critical": 0.2733509420114396
+    }
+  },
+  {
+    "test_case": "High_Temp",
+    "mode": "ai",
+    "duration_seconds": 30,
+    "messages_sent": 90,
+    "throughput_msg_per_sec": 3.0,
+    "avg_latency_sec": 0.010549818144904242,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.6183990736032103,
+      "critical": 0.26444231699698456
+    }
+  },
+  {
+    "test_case": "Critical_Combo",
+    "mode": "ai",
+    "duration_seconds": 30,
+    "messages_sent": 120,
+    "throughput_msg_per_sec": 4.0,
+    "avg_latency_sec": 0.010555670658747355,
+    "routing_accuracy": 1.0,
+    "subscriber_load": {
+      "normal": 0.48349413344511677,
+      "critical": 0.2491433423264603
+    }
+  }
+]
