@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-AI-Enabled MQTT Energy Broker with Auto-Scaling Subscribers (Optimized)
-"""
-
 import paho.mqtt.client as mqtt
 from openai import OpenAI
 import json
@@ -22,7 +17,6 @@ import uuid
 import statistics
 from concurrent.futures import ThreadPoolExecutor
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format=f"{Fore.CYAN}%(asctime)s{Style.RESET_ALL} - "
@@ -74,24 +68,19 @@ class AIEnergyBroker:
         self.metrics_buffer = []
         self.metrics_timer = None
         
-        # Initialize database
         self._init_database()
         
-        # Initialize AI Client
         self.llm_client = OpenAI(
             base_url="https://api.groq.com/openai/v1",
             api_key=groq_key,
             max_retries=2
         )
         
-        # Batch processing configuration
         self.batch_interval = 10
         self.batch_timer = None
         
-        # Initialize Rule Manager
         self.rule_manager = RuleManager()
         
-        # Scaling configuration
         self.scaling_enabled = True
         self.max_normal_subscribers = 4
         self.max_critical_subscribers = 3
@@ -102,26 +91,22 @@ class AIEnergyBroker:
         self.scaling_threshold_down = 0.15
         self.scaling_timer = None
         
-        # Current active subscribers
         self.active_normal_subs = {}
         self.active_critical_subs = {}
         self._initialize_subscribers()
         
-        # Start monitoring thread
         self.monitor_thread = Thread(
             target=self._monitor_subscribers,
             daemon=True
         )
         self.monitor_thread.start()
         
-        # MQTT Client setup
         self.client = mqtt.Client("AIEnergyBroker", protocol=mqtt.MQTTv5)
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.on_publish = self._on_publish
         self._connect_mqtt()
         
-        # Start scaling monitor
         if self.scaling_enabled:
             self._start_scaling_engine()
             
