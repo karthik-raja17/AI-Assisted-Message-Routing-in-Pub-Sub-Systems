@@ -68,44 +68,35 @@ class NormalSubscriber:
 
     def on_message(self, client, userdata, msg):
         try:
+            message = json.loads(msg.payload.decode('utf-8'))
+            priority_color = Fore.GREEN if message.get('final_priority') == 'normal' else Fore.RED
+            color = Fore.CYAN # Default color for console output
+
+            print(f"\n{color}═════════ NORMAL SUBSCRIBER {self.subscriber_id} ═════════{Style.RESET_ALL}")
+            print(f"{color}Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Style.RESET_ALL}")
+            print(f"{color}Topic: {msg.topic}{Style.RESET_ALL}")
+            print(f"{priority_color}Priority: {message.get('final_priority', 'N/A').upper()}{Style.RESET_ALL}")
+            print(f"{color}Expected Route: {message.get('expected_route', 'N/A').upper()}{Style.RESET_ALL}")
+            print(f"{color}Message ID: {message.get('message_id', 'N/A')}{Style.RESET_ALL}")
+
+            # Displaying AI analysis if present
+            if 'ai_analysis' in message:
+                print(f"\n{color}🧠 AI ANALYSIS:{Style.RESET_ALL}")
+                print(f"  {message['ai_analysis']}")
+
+            print(f"\n{color}⚡ Power Status:{Style.RESET_ALL}")
+            print(f"  Total: {message['energy']['total']}W")
+            print(f"  Lights: {message['energy']['lights']}W")
+            print(f"  HVAC: {message['energy'].get('hvac', 'N/A')}W")
+            print(f"  Equipment: {message['energy'].get('equipment', 'N/A')}W")
             
-            qsize = client._msg_queue.qsize()
-            if qsize > 5:
-                print(f"!QUEUE OVERLOAD: {qsize} pending!")
+            print(f"\n{color}🌡️ Environment:{Style.RESET_ALL}")
+            for zone, values in message['zones'].items():
+                temp_color = Fore.RED if values['temperature'] > 25 else Fore.YELLOW if values['temperature'] > 22 else Fore.CYAN
+                print(f"  {zone}: {temp_color}{values['temperature']}°C{Style.RESET_ALL} | {values['humidity']}% RH")
             
-            data = json.loads(msg.payload.decode())
-            topic_parts = msg.topic.split('/')
-            alert_level = topic_parts[1] if len(topic_parts) > 1 else "normal"
-            
-            print(f"\n{Fore.CYAN}════════ ENERGY UPDATE ════════{Style.RESET_ALL}")
-            print(f"{Fore.WHITE}🕒 {data.get('received_at', 'N/A')}{Style.RESET_ALL}")
-            print(f"{Fore.WHITE}👤 Subscriber: {self.subscriber_id}{Style.RESET_ALL}")
-            
-            # Handle both single messages and batches
-            messages = data.get('messages', [data])
-            
-            for message in messages:
-                # Color code based on alert level
-                if alert_level == "warning":
-                    color = Fore.YELLOW
-                elif alert_level == "critical":
-                    color = Fore.RED
-                else:
-                    color = Fore.CYAN
-                    
-                print(f"{color}⚡ Power Status:{Style.RESET_ALL}")
-                print(f"  Total: {message['energy']['total']}W")
-                print(f"  Lights: {message['energy']['lights']}W")
-                print(f"  HVAC: {message['energy'].get('hvac', 'N/A')}W")
-                print(f"  Equipment: {message['energy'].get('equipment', 'N/A')}W")
-                
-                print(f"\n{color}🌡️ Environment:{Style.RESET_ALL}")
-                for zone, values in message['zones'].items():
-                    temp_color = Fore.RED if values['temperature'] > 25 else Fore.YELLOW if values['temperature'] > 22 else Fore.CYAN
-                    print(f"  {zone}: {temp_color}{values['temperature']}°C{Style.RESET_ALL} | {values['humidity']}% RH")
-                
-                print(f"{Fore.CYAN}══════════════════════════════{Style.RESET_ALL}\n")
-            
+            print(f"{Fore.CYAN}══════════════════════════════{Style.RESET_ALL}\n")
+        
         except Exception as e:
             print(f"SUBSCRIBER CRASH: {str(e)}")
 
@@ -120,8 +111,5 @@ class NormalSubscriber:
 
 if __name__ == "__main__":
     subscriber_id = sys.argv[1] if len(sys.argv) > 1 else "1"
-    try:
-        NormalSubscriber(subscriber_id).start()
-    except Exception as e:
-        print(f"{Fore.RED}Fatal error: {str(e)}{Style.RESET_ALL}")
-        sys.exit(1)
+    subscriber = NormalSubscriber(subscriber_id)
+    subscriber.start()

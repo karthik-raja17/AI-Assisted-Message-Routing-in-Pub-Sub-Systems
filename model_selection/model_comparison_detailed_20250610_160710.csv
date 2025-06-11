@@ -1,0 +1,538 @@
+model,model_id,scenario,expected,predicted,correct,response_time,analysis
+Llama3 70B,llama3-70b-8192,Very Low Power Critical,critical,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 45w (normal)
+* lights power: 20w (normal)
+* equipment power: 15w (normal)
+* hvac power: 10w (normal)
+* zone temperatures:
+	+ zone 1: 20.0°c (normal)
+	+ zone 2: 19.5°c (normal)
+	+ zone 3: 21.0°c (normal)
+
+**critical conditions check**
+
+* power: 45w (normal)
+* zone temperatures: all normal
+* no clear equipment failure patterns detected
+
+**priority and analysis summary**
+
+normal",False,0.7657630443572998,All systems operating within normal ranges.
+Llama3 70B,llama3-70b-8192,High Temperature Critical,critical,normal,False,0.7701332569122314,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 800 W (within normal range)
+* Lights power: 200 W (within normal range)
+* Equipment power: 300 W (within normal range)
+* HVAC power: 300 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 28.0°C (above normal range)
+	+ Zone 2: 27.5°C (at normal range)
+	+ Zone 3: 26.8°C (within normal range)
+
+**Critical Conditions**
+
+* Power: 800 W (within normal range)
+* Zone temperatures: Zone 1 is above normal range (27.5°C)
+* Equipment failure patterns"
+Llama3 70B,llama3-70b-8192,High Power Critical,critical,normal,False,0.7758221626281738,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 1200W (within normal limits)
+* Lights power: 300W (within normal limits)
+* Equipment power: 500W (within normal limits)
+* HVAC power: 400W (within normal limits)
+* Zone temperatures:
+	+ Zone1: 22.5°C (within normal limits)
+	+ Zone2: 23.0°C (within normal limits)
+	+ Zone3: 21.8°C (within normal limits)
+
+**Critical Conditions Check**
+
+* Power: 1200W (within normal limits, no 10% buffer breach)
+* Zone temperatures: no zone exceeds 27.5°C (10"
+Llama3 70B,llama3-70b-8192,Multiple Zone High Temp,critical,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 750w (within normal range)
+* lights power: 150w (within normal range)
+* equipment power: 300w (within normal range)
+* hvac power: 300w (within normal range)
+* zone temperatures:
+	+ zone1: 28.5°c (above normal range)
+	+ zone2: 27.8°c (within normal range)
+	+ zone3: 29.2°c (above normal range)
+
+**critical conditions check**
+* power: 750w (within normal range)
+* zone temperatures: zone1 and zone3 are above normal range
+
+**priority and analysis summary**
+
+normal",False,0.606503963470459,All
+Llama3 70B,llama3-70b-8192,Normal Operation,normal,normal,True,0.6237969398498535,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 650W (within normal range)
+* Lights power: 150W (within normal range)
+* Equipment power: 250W (within normal range)
+* HVAC power: 250W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 22.5°C (within normal range)
+	+ Zone 2: 23.0°C (within normal range)
+	+ Zone 3: 21.8°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 650W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* No clear"
+Llama3 70B,llama3-70b-8192,Moderate Power Usage,normal,normal,True,0.6545274257659912,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 850W (within normal range)
+* Lights power: 200W (within normal range)
+* Equipment power: 350W (within normal range)
+* HVAC power: 300W (within normal range)
+* Zone temperatures:
+	+ Zone1: 24.0°C (within normal range)
+	+ Zone2: 23.5°C (within normal range)
+	+ Zone3: 24.2°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 850W (within normal range)
+* Zone temperatures: all within normal range
+* No clear equipment failure patterns detected
+
+**Priority and Analysis Summary**"
+Llama3 70B,llama3-70b-8192,Low Power Normal,normal,normal,True,0.6156275272369385,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 300W (within normal range)
+* Lights power: 100W (within normal range)
+* Equipment power: 100W (within normal range)
+* HVAC power: 100W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 20.5°C (within normal range)
+	+ Zone 2: 21.0°C (within normal range)
+	+ Zone 3: 20.8°C (within normal range)
+
+**Critical Conditions Check**
+* Power: 300W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* Equipment failure"
+Llama3 70B,llama3-70b-8192,Threshold Boundary,normal,normal,True,0.6093759536743164,"Here is the analysis of the industrial energy system:
+
+**Analysis**
+
+* Total power: 1050W (within normal range)
+* Lights power: 250W (within normal range)
+* Equipment power: 400W (within normal range)
+* HVAC power: 400W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 24.8°C (within normal range)
+	+ Zone 2: 24.9°C (within normal range)
+	+ Zone 3: 24.7°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 1050W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* Equipment"
+Llama3 70B,llama3-70b-8192,Temperature Boundary,normal,normal,True,0.5791184902191162,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 700 W (within normal range)
+* Lights power: 150 W (within normal range)
+* Equipment power: 275 W (within normal range)
+* HVAC power: 275 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 27.4°C (within normal range)
+	+ Zone 2: 26.8°C (within normal range)
+	+ Zone 3: 27.2°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 700 W (within normal range)
+* Zone temperatures: all within normal range
+* No clear equipment failure patterns detected**
+
+**Priority and"
+Llama3 70B,llama3-70b-8192,High Temperature Critical,critical,normal,False,0.5808520317077637,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 800 W (within normal range)
+* Lights power: 200 W (within normal range)
+* Equipment power: 300 W (within normal range)
+* HVAC power: 300 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 28.0°C (above normal range)
+	+ Zone 2: 27.5°C (at normal range)
+	+ Zone 3: 26.8°C (within normal range)
+
+**Critical Conditions**
+
+* Power: 800 W (within normal range)
+* Zone temperatures: Zone 1 is above normal range (27.5°C)
+* Equipment failure patterns"
+Llama3 70B,llama3-70b-8192,Very Low Power Critical,critical,normal,False,0.5829081535339355,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 45W (normal)
+* Lights power: 20W (normal)
+* Equipment power: 15W (normal)
+* HVAC power: 10W (normal)
+* Zones:
+	+ Zone1: 20.0°C (normal)
+	+ Zone2: 19.5°C (normal)
+	+ Zone3: 21.0°C (normal)
+
+**Critical Conditions Check**
+
+* Power: 45W (normal, no critical condition)
+* Any zone > 27.5°C): No (normal, no critical condition)
+* Clear equipment failure patterns: Not detected (normal, no critical condition)
+
+**Response**"
+Llama3 70B,llama3-70b-8192,High Power Critical,critical,normal,False,0.5877485275268555,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 1200W (within normal limits)
+* Lights power: 300W (within normal limits)
+* Equipment power: 500W (within normal limits)
+* HVAC power: 400W (within normal limits)
+* Zone temperatures:
+	+ Zone1: 22.5°C (within normal limits)
+	+ Zone2: 23.0°C (within normal limits)
+	+ Zone3: 21.8°C (within normal limits)
+
+**Critical Conditions Check**
+
+* Power: 1200W (within normal limits, no critical condition)
+* Zone temperatures: all within normal limits, no critical condition
+* Equipment failure:"
+Llama3 70B,llama3-70b-8192,Moderate Power Usage,normal,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 850w (within normal range)
+* lights power: 200w (within normal range)
+* equipment power: 350w (within normal range)
+* hvac power: 300w (within normal range)
+* zone temperatures:
+	+ zone1: 24.0°c (within normal range)
+	+ zone2: 23.5°c (within normal range)
+	+ zone3: 24.2°c (within normal range)
+
+**critical conditions check**
+
+* power: 850w (within normal range)
+* zone temperatures: all within normal range
+* no clear equipment failure patterns detected
+
+**response**
+
+normal",False,0.6203727722167969,All
+Llama3 70B,llama3-70b-8192,Multiple Zone High Temp,critical,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 750w (within normal range)
+* lights power: 150w (within normal range)
+* equipment power: 300w (within normal range)
+* hvac power: 300w (within normal range)
+* zone temperatures:
+	+ zone1: 28.5°c (above normal range)
+	+ zone2: 27.8°c (within normal range)
+	+ zone3: 29.2°c (above normal range)
+
+**critical conditions check**
+* power: 750w (within normal range)
+* zone temperatures: zone1 and zone3 are above normal range
+
+**priority and analysis summary**
+
+normal",False,0.63020920753479,All
+Llama3 70B,llama3-70b-8192,Normal Operation,normal,normal,True,0.6280410289764404,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 650W (within normal range)
+* Lights power: 150W (within normal range)
+* Equipment power: 250W (within normal range)
+* HVAC power: 250W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 22.5°C (within normal range)
+	+ Zone 2: 23.0°C (within normal range)
+	+ Zone 3: 21.8°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 650W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* No clear"
+Llama3 70B,llama3-70b-8192,Threshold Boundary,normal,"here is the analysis of the industrial energy system:
+
+**analysis**
+
+* total power: 1050w (within normal range)
+* zone temperatures:
+	+ zone1: 24.8°c (within normal range)
+	+ zone2: 24.9°c (within normal range)
+	+ zone3: 24.7°c (within normal range)
+* equipment power: 400w (within normal range)
+* no clear equipment failure patterns detected
+
+**priority and analysis summary**
+
+normal",False,0.5000917911529541,All systems within normal operating ranges. No alerts or critical conditions.
+Llama3 70B,llama3-70b-8192,Low Power Normal,normal,normal,True,0.5840940475463867,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 300W (within normal range)
+* Lights power: 100W (within normal range)
+* Equipment power: 100W (within normal range)
+* HVAC power: 100W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 20.5°C (within normal range)
+	+ Zone 2: 21.0°C (within normal range)
+	+ Zone 3: 20.8°C (within normal range)
+
+**Critical Conditions Check**
+* Power: 300W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* Equipment failure"
+Llama3 70B,llama3-70b-8192,Temperature Boundary,normal,normal,True,0.5828523635864258,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 700 W (within normal range)
+* Lights power: 150 W (within normal range)
+* Equipment power: 275 W (within normal range)
+* HVAC power: 275 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 27.4°C (within normal range)
+	+ Zone 2: 26.8°C (within normal range)
+	+ Zone 3: 27.2°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 700 W (within normal range)
+* Zone temperatures: all within normal range
+* No clear equipment failure patterns detected**
+
+**Response**"
+Llama3 70B,llama3-70b-8192,Very Low Power Critical,critical,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 45w (normal)
+* lights power: 20w (normal)
+* equipment power: 15w (normal)
+* hvac power: 10w (normal)
+* zone temperatures:
+	+ zone 1: 20.0°c (normal)
+	+ zone 2: 19.5°c (normal)
+	+ zone 3: 21.0°c (normal)
+
+**critical conditions check**
+
+* power: 45w (normal)
+* zone temperatures: all normal
+* no clear equipment failure patterns detected
+
+**response**
+
+normal",False,6.668954372406006,All systems operating within normal parameters.
+Llama3 70B,llama3-70b-8192,High Temperature Critical,critical,normal,False,6.680046558380127,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 800 W (within normal range)
+* Lights power: 200 W (within normal range)
+* Equipment power: 300 W (within normal range)
+* HVAC power: 300 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 28.0°C (above normal range)
+	+ Zone 2: 27.5°C (at normal range)
+	+ Zone 3: 26.8°C (within normal range)
+
+**Critical Conditions**
+
+* Power: 800 W (within normal range)
+* Zone temperatures: Zone 1 is above normal range (27.5°C)
+* Equipment failure patterns"
+Llama3 70B,llama3-70b-8192,High Power Critical,critical,normal,False,6.694448947906494,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 1200W (within normal limits)
+* Lights power: 300W (within normal limits)
+* Equipment power: 500W (within normal limits)
+* HVAC power: 400W (within normal limits)
+* Zone temperatures:
+	+ Zone1: 22.5°C (within normal limits)
+	+ Zone2: 23.0°C (within normal limits)
+	+ Zone3: 21.8°C (within normal limits)
+
+**Critical Conditions Check**
+
+* Power: 1200W (within normal limits, no critical condition)
+* Zone temperatures: all within normal limits, no critical condition
+* Equipment failure:"
+Llama3 70B,llama3-70b-8192,Multiple Zone High Temp,critical,"here is the analysis of the industrial energy system data:
+
+**analysis**
+
+* total power: 750w (within normal range)
+* lights power: 150w (within normal range)
+* equipment power: 300w (within normal range)
+* hvac power: 300w (within normal range)
+* zone temperatures:
+	+ zone1: 28.5°c (above normal range)
+	+ zone2: 27.8°c (within normal range)
+	+ zone3: 29.2°c (above normal range)
+
+**critical conditions check**
+* power: 750w (within normal range)
+* zone temperatures: zone1 and zone3 are above normal range
+
+**priority and analysis summary**
+
+normal",False,10.760211944580078,All
+Llama3 70B,llama3-70b-8192,Normal Operation,normal,normal,True,10.756043672561646,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 650W (within normal range)
+* Lights power: 150W (within normal range)
+* Equipment power: 250W (within normal range)
+* HVAC power: 250W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 22.5°C (within normal range)
+	+ Zone 2: 23.0°C (within normal range)
+	+ Zone 3: 21.8°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 650W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* No clear"
+Llama3 70B,llama3-70b-8192,Moderate Power Usage,normal,normal,True,10.746799230575562,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 850W (within normal range)
+* Lights power: 200W (within normal range)
+* Equipment power: 350W (within normal range)
+* HVAC power: 300W (within normal range)
+* Zone temperatures:
+	+ Zone1: 24.0°C (within normal range)
+	+ Zone2: 23.5°C (within normal range)
+	+ Zone3: 24.2°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 850W (within normal range)
+* Zone temperatures: all within normal range
+* No clear equipment failure patterns detected
+
+**Priority and Analysis Summary**"
+Llama3 70B,llama3-70b-8192,Temperature Boundary,normal,normal,True,10.746722221374512,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 700 W (within normal range)
+* Lights power: 150 W (within normal range)
+* Equipment power: 275 W (within normal range)
+* HVAC power: 275 W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 27.4°C (within normal range)
+	+ Zone 2: 26.8°C (within normal range)
+	+ Zone 3: 27.2°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 700 W (within normal range)
+* Zone temperatures: all within normal range
+* No clear equipment failure patterns detected**
+
+**Priority and"
+Llama3 70B,llama3-70b-8192,Low Power Normal,normal,normal,True,10.760679244995117,"Here is the analysis of the industrial energy system data:
+
+**Analysis**
+
+* Total power: 300W (within normal range)
+* Lights power: 100W (within normal range)
+* Equipment power: 100W (within normal range)
+* HVAC power: 100W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 20.5°C (within normal range)
+	+ Zone 2: 21.0°C (within normal range)
+	+ Zone 3: 20.8°C (within normal range)
+
+**Critical Conditions Check**
+* Power: 300W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+
+**Priority and"
+Llama3 70B,llama3-70b-8192,Threshold Boundary,normal,normal,True,10.75574541091919,"Here is the analysis of the industrial energy system:
+
+**Analysis**
+
+* Total power: 1050W (within normal range)
+* Lights power: 250W (within normal range)
+* Equipment power: 400W (within normal range)
+* HVAC power: 400W (within normal range)
+* Zone temperatures:
+	+ Zone 1: 24.8°C (within normal range)
+	+ Zone 2: 24.9°C (within normal range)
+	+ Zone 3: 24.7°C (within normal range)
+
+**Critical Conditions Check**
+
+* Power: 1050W (within normal range, no critical condition)
+* Zone temperatures: all within normal range, no critical condition
+* Equipment"
+Llama3 8B,llama3-8b-8192,High Power Critical,critical,high,False,0.2586710453033447,Power exceeds threshold (1200W > 1100W)
+Llama3 8B,llama3-8b-8192,Very Low Power Critical,critical,normal,False,0.2646019458770752,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,High Temperature Critical,critical,high,False,0.2994527816772461,Critical: Power exceeds threshold (800W > 1100W) and temperature is close to critical (28.0°C > 27.5°C)
+Llama3 8B,llama3-8b-8192,Multiple Zone High Temp,critical,high,False,0.24983549118041992,Power exceeds threshold (750W > 1000W)
+Llama3 8B,llama3-8b-8192,Normal Operation,normal,normal,True,0.28221607208251953,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Moderate Power Usage,normal,normal,True,0.2523071765899658,Within normal operating range (power below 1000W and temperature below 25°C)
+Llama3 8B,llama3-8b-8192,Low Power Normal,normal,normal,True,0.2992129325866699,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Threshold Boundary,normal,high,False,0.25832700729370117,Power exceeds threshold (1050W > 1000W)
+Llama3 8B,llama3-8b-8192,Temperature Boundary,normal,high,False,0.2610044479370117,Power exceeds threshold (700W > 1000W)
+Llama3 8B,llama3-8b-8192,High Temperature Critical,critical,high,False,0.21768426895141602,Power exceeds threshold (800W > 1000W)
+Llama3 8B,llama3-8b-8192,Very Low Power Critical,critical,low,False,0.23085784912109375,Power below threshold (45W < 1000W)
+Llama3 8B,llama3-8b-8192,High Power Critical,critical,high,False,0.2548210620880127,Power exceeds threshold (1200W > 1100W)
+Llama3 8B,llama3-8b-8192,Multiple Zone High Temp,critical,high,False,0.2250986099243164,Power exceeds threshold (750W > 1000W)
+Llama3 8B,llama3-8b-8192,Normal Operation,normal,normal,True,0.2228100299835205,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Moderate Power Usage,normal,normal,True,0.242631196975708,"Power below threshold, max temp within threshold"
+Llama3 8B,llama3-8b-8192,Threshold Boundary,normal,normal,True,0.23066115379333496,"Power within threshold, max temp slightly above threshold"
+Llama3 8B,llama3-8b-8192,Low Power Normal,normal,normal,True,0.2684047222137451,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Temperature Boundary,normal,high,False,0.2404942512512207,Power exceeds threshold (700W > 1000W)
+Llama3 8B,llama3-8b-8192,High Power Critical,critical,high,False,0.2761974334716797,Power exceeds threshold (1200W > 1100W)
+Llama3 8B,llama3-8b-8192,High Temperature Critical,critical,high,False,0.2774183750152588,Power exceeds threshold (800W > 1000W)
+Llama3 8B,llama3-8b-8192,Very Low Power Critical,critical,normal,False,0.2837684154510498,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Multiple Zone High Temp,critical,high,False,0.24999713897705078,Power exceeds threshold (750W > 1000W)
+Llama3 8B,llama3-8b-8192,Normal Operation,normal,normal,True,0.25263524055480957,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Threshold Boundary,normal,high,False,0.21474242210388184,Power exceeds threshold (1050W > 1000W)
+Llama3 8B,llama3-8b-8192,Low Power Normal,normal,normal,True,0.2317044734954834,Power and temperature within normal limits.
+Llama3 8B,llama3-8b-8192,Moderate Power Usage,normal,normal,True,0.8093111515045166,Within normal power and temperature ranges.
+Llama3 8B,llama3-8b-8192,Temperature Boundary,normal,high,False,0.35117411613464355,Power exceeds threshold (700W > 1000W)

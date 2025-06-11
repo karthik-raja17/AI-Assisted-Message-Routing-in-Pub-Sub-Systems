@@ -47,7 +47,7 @@ class RuleManager:
         """Dynamically adjust thresholds based on patterns"""
         changes = False
         
-        if len(self.message_stats['energy_total']) % 100 != 0:
+        if len(self.message_stats['energy_total']) == 100:
             energy_data = self.message_stats['energy_total']
             avg = statistics.mean(energy_data)
             std = statistics.stdev(energy_data) if len(energy_data) > 1 else 0

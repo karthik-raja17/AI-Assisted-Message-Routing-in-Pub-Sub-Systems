@@ -69,16 +69,15 @@ class RedAlertSubscriber:
 
     def on_message(self, client, userdata, msg):
         try:
-            data = json.loads(msg.payload.decode())
-        
-            print(f"\n{Fore.RED}════════ CRITICAL ALERT ════════{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}🕒 {data.get('received_at', 'N/A')}{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}👤 Subscriber: {self.subscriber_id}{Style.RESET_ALL}")
+            data = json.loads(msg.payload.decode('utf-8'))
             
-            print(f"{Fore.WHITE}Trigger: {data.get('rule_trigger', 'AI detection')}")
-            if 'current_threshold' in data:
-                print(f"{Fore.WHITE}Threshold: {data['current_threshold']}W{Style.RESET_ALL}")
-                
+            print(f"\n{Fore.RED}═════════ CRITICAL ALERT {self.subscriber_id} ═════════{Style.RESET_ALL}")
+            print(f"{Fore.RED}Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Topic: {msg.topic}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Priority: {data.get('final_priority', 'N/A').upper()}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Expected Route: {data.get('expected_route', 'N/A').upper()}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Message ID: {data.get('message_id', 'N/A')}{Style.RESET_ALL}")
+
             print(f"\n{Fore.RED}🚨 EMERGENCY DETECTED:{Style.RESET_ALL}")
             print(f"  Total Power: {data['energy']['total']}W")
             print(f"  Lights: {data['energy']['lights']}W")
@@ -87,7 +86,7 @@ class RedAlertSubscriber:
             print(data.get('ai_analysis', 'No analysis available'))
             
             print(f"\n{Fore.RED}HOT ZONES:{Style.RESET_ALL}")
-            for zone, values in list(data['zones'].items())[:3]:
+            for zone, values in list(data['zones'].items())[:3]: # Limiting to first 3 zones for brevity
                 temp_color = Fore.RED if values['temperature'] > 25 else Fore.YELLOW
                 print(f"  {zone}: {temp_color}{values['temperature']}°C{Style.RESET_ALL} | {values['humidity']}% RH")
             
@@ -108,8 +107,5 @@ class RedAlertSubscriber:
 
 if __name__ == "__main__":
     subscriber_id = sys.argv[1] if len(sys.argv) > 1 else "1"
-    try:
-        RedAlertSubscriber(subscriber_id).start()
-    except Exception as e:
-        print(f"{Fore.RED}Fatal error: {str(e)}{Style.RESET_ALL}")
-        sys.exit(1)
+    subscriber = RedAlertSubscriber(subscriber_id)
+    subscriber.start()

@@ -49,7 +49,7 @@ class EnergyPublisher:
             self.client.max_queued_messages = 100
             self.client.on_publish = self.on_publish
             self.client.on_log = self.on_log
-            self.target_interval = 0.5  # Increased publish rate
+            self.target_interval = 2  # Increased publish rate
             self.last_publish_time = 0
 
         except Exception as e:

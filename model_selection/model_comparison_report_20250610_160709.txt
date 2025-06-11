@@ -1,0 +1,87 @@
+================================================================================
+AI MODEL PERFORMANCE COMPARISON REPORT
+================================================================================
+Generated: 2025-06-10 16:07:09
+Test Scenarios: 9
+Models Compared: Llama3 70B, Llama3 8B
+
+OVERALL PERFORMANCE SUMMARY
+----------------------------------------
+
+Llama3 70B (llama3-70b-8192):
+  Accuracy: 48.1%
+  Avg Response Time: 3.551s
+  Median Response Time: 0.630s
+  Error Rate: 0.0%
+
+Llama3 8B (llama3-8b-8192):
+  Accuracy: 37.0%
+  Avg Response Time: 0.278s
+  Median Response Time: 0.255s
+  Error Rate: 0.0%
+
+
+DETAILED SCENARIO ANALYSIS
+----------------------------------------
+
+High Power Critical (Expected: critical):
+  Llama3 70B: 0.0% accuracy
+  Llama3 8B: 0.0% accuracy
+
+High Temperature Critical (Expected: critical):
+  Llama3 70B: 0.0% accuracy
+  Llama3 8B: 0.0% accuracy
+
+Very Low Power Critical (Expected: critical):
+  Llama3 70B: 0.0% accuracy
+  Llama3 8B: 0.0% accuracy
+
+Multiple Zone High Temp (Expected: critical):
+  Llama3 70B: 0.0% accuracy
+  Llama3 8B: 0.0% accuracy
+
+Normal Operation (Expected: normal):
+  Llama3 70B: 100.0% accuracy
+  Llama3 8B: 100.0% accuracy
+
+Moderate Power Usage (Expected: normal):
+  Llama3 70B: 66.7% accuracy
+  Llama3 8B: 100.0% accuracy
+
+Low Power Normal (Expected: normal):
+  Llama3 70B: 100.0% accuracy
+  Llama3 8B: 100.0% accuracy
+
+Threshold Boundary (Expected: normal):
+  Llama3 70B: 66.7% accuracy
+  Llama3 8B: 33.3% accuracy
+
+Temperature Boundary (Expected: normal):
+  Llama3 70B: 100.0% accuracy
+  Llama3 8B: 0.0% accuracy
+
+
+RESPONSE TIME ANALYSIS
+----------------------------------------
+
+Llama3 70B:
+  Min: 0.500s
+  Max: 10.761s
+  Std Dev: 4.362s
+
+Llama3 8B:
+  Min: 0.215s
+  Max: 0.809s
+  Std Dev: 0.110s
+
+
+RECOMMENDATION
+----------------------------------------
+Recommended Model: Llama3 8B
+
+Reasoning:
+- Accuracy: 37.0%
+- Average Response Time: 0.278s
+- Error Rate: 0.0%
+- Consistent performance across different scenario types
+- Faster response time than Llama3 70B by 3.273s
