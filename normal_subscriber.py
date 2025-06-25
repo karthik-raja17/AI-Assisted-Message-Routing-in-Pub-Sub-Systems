@@ -13,7 +13,7 @@ class NormalSubscriber:
     def __init__(self, subscriber_id="1"):
         self.subscriber_id = subscriber_id.split('/')[-1]
         
-        # Version-compatible client initialization
+        
         self.client = mqtt.Client(
             f"NormalSubscriber-{self.subscriber_id}",
             protocol=mqtt.MQTTv311  # Explicit protocol version
@@ -55,7 +55,7 @@ class NormalSubscriber:
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print(f"{Fore.GREEN}Connected to broker (RC: {rc}){Style.RESET_ALL}")
-            client.subscribe(f"energy/+/subscriber{self.subscriber_id}", qos=1)
+            client.subscribe(f"energy/normal/subscriber{self.subscriber_id}", qos=1)
             print(f"{Fore.CYAN}🔌 Subscriber {self.subscriber_id} ready for normal updates{Style.RESET_ALL}")
         else:
             print(f"{Fore.RED}Connection failed (RC: {rc}){Style.RESET_ALL}")
